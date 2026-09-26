@@ -3,454 +3,712 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>異世界オンライン</title>
 
 <style>
-* {
-    box-sizing: border-box;
-}
+*{box-sizing:border-box}
 
-html, body {
-    margin: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
-    color: white;
-    background: #080b14;
-}
-
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* 背景 */
-.game {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-
+body{
+    margin:0;
+    min-height:100vh;
+    font-family:"Yu Mincho","Hiragino Mincho ProN",serif;
+    color:white;
     background:
-        radial-gradient(circle at 50% 25%, rgba(80,120,200,0.35), transparent 30%),
-        linear-gradient(
-            to bottom,
-            #101a35 0%,
-            #080d1d 50%,
-            #03050b 100%
-        );
+        radial-gradient(circle at 50% 20%,#263d72 0%,transparent 35%),
+        linear-gradient(#080d20,#02040b);
 }
 
-/* 星 */
-.game::before {
-    content: "";
-    position: absolute;
-    inset: 0;
+button,select,input{font:inherit}
 
-    background-image:
-        radial-gradient(circle, white 1px, transparent 1px),
-        radial-gradient(circle, rgba(255,255,255,0.7) 1px, transparent 1px);
-
-    background-size: 90px 90px, 150px 150px;
-    background-position: 10px 20px, 50px 70px;
-
-    opacity: 0.45;
+.screen{
+    min-height:100vh;
+    padding:30px 15px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
-/* 月 */
-.moon {
-    position: absolute;
-    width: 180px;
-    height: 180px;
-    border-radius: 50%;
-
-    right: 8%;
-    top: 8%;
-
-    background:
-        radial-gradient(circle at 35% 30%, #ffffff, #b8c8e5 65%, #7385a8);
-
-    box-shadow:
-        0 0 30px rgba(180,210,255,0.5),
-        0 0 100px rgba(100,150,255,0.2);
+.box{
+    width:min(900px,100%);
+    padding:35px;
+    background:rgba(7,13,30,.94);
+    border:1px solid #718bc5;
+    border-radius:15px;
+    box-shadow:0 0 50px rgba(50,100,255,.18);
 }
 
-/* タイトル画面 */
-.title-screen {
-    position: relative;
-    z-index: 2;
-
-    width: min(900px, 92%);
-    text-align: center;
-
-    padding: 50px 30px;
+h1{
+    text-align:center;
+    font-size:clamp(42px,8vw,80px);
+    margin:0 0 10px;
+    text-shadow:0 0 25px #527cff;
 }
 
-/* 小さい文字 */
-.subtitle {
-    font-size: 18px;
-    letter-spacing: 8px;
-    color: #b9c9e8;
-    margin-bottom: 15px;
+h2{
+    text-align:center;
+    font-size:32px;
 }
 
-/* タイトル */
-h1 {
-    margin: 0;
-
-    font-size: clamp(45px, 9vw, 100px);
-    letter-spacing: 8px;
-
-    color: #ffffff;
-
-    text-shadow:
-        0 0 10px #7599ff,
-        0 0 30px #4268d8,
-        0 4px 10px #000;
-
-    animation: titleGlow 3s infinite alternate;
+.subtitle{
+    text-align:center;
+    color:#aebddd;
+    letter-spacing:4px;
+    margin-bottom:35px;
 }
 
-@keyframes titleGlow {
-    from {
-        text-shadow:
-            0 0 10px #7599ff,
-            0 0 25px #4268d8,
-            0 4px 10px #000;
-    }
-
-    to {
-        text-shadow:
-            0 0 20px #ffffff,
-            0 0 50px #537cff,
-            0 4px 10px #000;
-    }
+.menu{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+    align-items:center;
 }
 
-.description {
-    margin-top: 18px;
-    margin-bottom: 45px;
-
-    color: #bfc8db;
-    font-size: 16px;
-    letter-spacing: 4px;
+button{
+    cursor:pointer;
+    color:white;
+    background:linear-gradient(90deg,#263e82,#152657);
+    border:1px solid #8ca9ed;
+    border-radius:7px;
+    padding:15px 25px;
+    width:min(400px,100%);
+    transition:.2s;
 }
 
-/* ボタン */
-.menu {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 14px;
+button:hover{
+    transform:scale(1.03);
+    box-shadow:0 0 20px #466ed0;
 }
 
-.menu button {
-    width: min(360px, 85%);
-    padding: 16px 25px;
-
-    border: 1px solid rgba(180,210,255,0.5);
-    border-radius: 6px;
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(40,60,110,0.8),
-            rgba(20,30,65,0.9)
-        );
-
-    color: white;
-
-    font-family: inherit;
-    font-size: 18px;
-    letter-spacing: 5px;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 5px 20px rgba(0,0,0,0.4),
-        inset 0 0 15px rgba(100,140,255,0.08);
-
-    transition: 0.25s;
+.start{
+    font-size:22px;
+    padding:20px;
 }
 
-.menu button:hover {
-    transform: scale(1.05);
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(70,100,180,0.95),
-            rgba(35,55,110,0.95)
-        );
-
-    border-color: #bcd0ff;
-
-    box-shadow:
-        0 0 20px rgba(100,150,255,0.45);
+.form-row{
+    margin:20px 0;
 }
 
-.menu .start {
-    margin-bottom: 8px;
-
-    font-size: 23px;
-    padding: 20px;
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(60,90,180,0.95),
-            rgba(30,50,120,0.95)
-        );
-
-    border-color: #a9c2ff;
-
-    box-shadow:
-        0 0 25px rgba(70,110,255,0.35);
+label{
+    display:block;
+    margin-bottom:8px;
+    color:#cbd7f3;
 }
 
-/* 下のコピーライト */
-.footer {
-    position: absolute;
-    bottom: 20px;
-    left: 0;
-    width: 100%;
-
-    text-align: center;
-
-    color: #68728a;
-    font-family: sans-serif;
-    font-size: 12px;
-    letter-spacing: 2px;
+input,select{
+    width:100%;
+    padding:13px;
+    color:white;
+    background:#101a35;
+    border:1px solid #637fbf;
+    border-radius:6px;
 }
 
-/* ポップアップ */
-.panel {
-    position: fixed;
-    z-index: 10;
-
-    left: 50%;
-    top: 50%;
-
-    transform: translate(-50%, -50%);
-
-    width: min(700px, 90%);
-
-    padding: 35px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(18,27,55,0.98),
-            rgba(7,11,25,0.98)
-        );
-
-    border: 1px solid #718bc5;
-    border-radius: 10px;
-
-    box-shadow:
-        0 0 50px rgba(0,0,0,0.8),
-        0 0 25px rgba(80,120,255,0.2);
-
-    text-align: center;
+.stats{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+    margin-top:20px;
 }
 
-.panel h2 {
-    margin-top: 0;
-    font-size: 30px;
+.stat{
+    background:#0e1730;
+    border:1px solid #293b67;
+    padding:12px;
+    border-radius:6px;
+    display:flex;
+    justify-content:space-between;
 }
 
-.panel p {
-    color: #bdc7db;
-    line-height: 1.8;
+.info{
+    margin-top:20px;
+    padding:18px;
+    background:rgba(40,60,110,.25);
+    border-radius:8px;
+    line-height:1.8;
 }
 
-.panel button {
-    margin-top: 20px;
-    padding: 12px 30px;
-
-    background: #253b78;
-    border: 1px solid #9eb5f0;
-    border-radius: 5px;
-
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
+.actions{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    justify-content:center;
+    margin-top:30px;
 }
 
-.hidden {
-    display: none;
+.actions button{
+    width:auto;
 }
 
-/* スマホ */
-@media (max-width: 600px) {
+.hidden{display:none}
 
-    .moon {
-        width: 100px;
-        height: 100px;
-        right: 6%;
-        top: 5%;
-    }
+.complete{
+    text-align:center;
+}
 
-    .title-screen {
-        padding: 30px 15px;
-    }
+.character-card{
+    padding:25px;
+    margin:20px 0;
+    border:1px solid #728bc4;
+    background:rgba(20,32,65,.7);
+    border-radius:10px;
+}
 
-    .subtitle {
-        font-size: 12px;
-        letter-spacing: 4px;
-    }
-
-    h1 {
-        letter-spacing: 3px;
-    }
-
-    .description {
-        font-size: 12px;
-        letter-spacing: 2px;
-    }
-
-    .menu button {
-        font-size: 15px;
-    }
+@media(max-width:600px){
+    .box{padding:22px 15px}
+    .stats{grid-template-columns:1fr}
 }
 </style>
 </head>
 
 <body>
 
-<div class="game">
+<!-- タイトル -->
 
-    <div class="moon"></div>
+<div id="titleScreen" class="screen">
+<div class="box">
 
-    <main class="title-screen">
+<h1>異世界オンライン</h1>
 
-        <div class="subtitle">
-            THE WORLD OF ANOTHER DIMENSION
-        </div>
+<div class="subtitle">
+THE WORLD OF ANOTHER DIMENSION
+</div>
 
-        <h1>異世界オンライン</h1>
+<div class="menu">
+<button class="start" onclick="openCreate()">
+⚔ GAME START ⚔
+</button>
 
-        <div class="description">
-            ―― 無限に広がる異世界へ ――
-        </div>
+<button onclick="showWorld()">
+WORLD
+</button>
 
-        <div class="menu">
+<button onclick="showSaved()">
+SAVED CHARACTER
+</button>
+</div>
 
-            <button class="start" onclick="startGame()">
-                ⚔ GAME START ⚔
-            </button>
-
-            <button onclick="showCharacter()">
-                CHARACTER
-            </button>
-
-            <button onclick="showWorld()">
-                WORLD
-            </button>
-
-            <button onclick="showOptions()">
-                OPTIONS
-            </button>
-
-        </div>
-
-    </main>
-
-    <div class="footer">
-        ISEKAI ONLINE
-    </div>
-
+</div>
 </div>
 
 
-<!-- GAME START画面 -->
+<!-- キャラクター作成 -->
 
-<div id="characterPanel" class="panel hidden">
+<div id="createScreen" class="screen hidden">
+<div class="box">
 
-    <h2>キャラクター作成</h2>
+<h2>⚔ キャラクター作成 ⚔</h2>
 
-    <p>
-        ここからあなたの冒険が始まる。<br>
-        種族・職業・能力を選び、異世界へ旅立とう。
-    </p>
+<div class="form-row">
+<label>キャラクター名</label>
+<input id="name" maxlength="20" placeholder="名前を入力">
+</div>
 
-    <button onclick="closePanel()">
-        まだ作成しない
-    </button>
+<div class="form-row">
+<label>種族</label>
+<select id="race" onchange="updateCharacter()"></select>
+</div>
 
+<div id="raceInfo" class="info"></div>
+
+<div class="form-row">
+<label>初期職業</label>
+<select id="job" onchange="updateCharacter()"></select>
+</div>
+
+<div id="jobInfo" class="info"></div>
+
+<h3>基本ステータス</h3>
+
+<div class="stats">
+<div class="stat"><span>HP</span><b id="hp"></b></div>
+<div class="stat"><span>STR</span><b id="str"></b></div>
+<div class="stat"><span>DEF</span><b id="def"></b></div>
+<div class="stat"><span>INT</span><b id="int"></b></div>
+<div class="stat"><span>MND</span><b id="mnd"></b></div>
+<div class="stat"><span>AGI</span><b id="agi"></b></div>
+<div class="stat"><span>LUK</span><b id="luk"></b></div>
+</div>
+
+<div class="actions">
+<button onclick="backTitle()">戻る</button>
+<button onclick="createCharacter()">キャラクター完成！</button>
+</div>
+
+</div>
 </div>
 
 
-<!-- WORLD画面 -->
+<!-- 完成画面 -->
 
-<div id="worldPanel" class="panel hidden">
+<div id="completeScreen" class="screen hidden">
+<div class="box complete">
 
-    <h2>異世界</h2>
+<h2>✨ キャラクター完成！ ✨</h2>
 
-    <p>
-        王都、巨大森林、砂漠、海、魔族領、天空世界、<br>
-        地下世界――。
-        <br><br>
-        世界はこれからさらに広がっていく。
-    </p>
+<div id="characterResult" class="character-card"></div>
 
-    <button onclick="closePanel()">
-        戻る
-    </button>
+<button onclick="enterWorld()">
+🌍 冒険を始める
+</button>
 
+</div>
 </div>
 
 
-<!-- OPTIONS画面 -->
+<!-- セーブキャラ -->
 
-<div id="optionsPanel" class="panel hidden">
+<div id="savedScreen" class="screen hidden">
+<div class="box">
 
-    <h2>OPTIONS</h2>
+<h2>保存されたキャラクター</h2>
 
-    <p>
-        異世界オンライン<br>
-        Version 0.1
-    </p>
+<div id="savedResult" class="character-card"></div>
 
-    <button onclick="closePanel()">
-        戻る
-    </button>
+<button onclick="backTitle()">戻る</button>
 
+</div>
+</div>
+
+
+<!-- WORLD -->
+
+<div id="worldScreen" class="screen hidden">
+<div class="box">
+
+<h2>🌍 異世界</h2>
+
+<div class="info">
+現在開発中。<br><br>
+王都・巨大森林・山岳地帯・砂漠・海・魔族領・天空世界・地下世界……。<br>
+この世界はこれからどんどん広がっていく。
+</div>
+
+<button onclick="backTitle()">戻る</button>
+
+</div>
 </div>
 
 
 <script>
 
-function hideAllPanels() {
-    document.getElementById("characterPanel").classList.add("hidden");
-    document.getElementById("worldPanel").classList.add("hidden");
-    document.getElementById("optionsPanel").classList.add("hidden");
+/* =========================
+   種族20種類
+========================= */
+
+const races = [
+{
+ name:"人間",
+ desc:"バランス型。どの職業にも適性がある。",
+ bonus:{hp:0,str:0,def:0,int:0,mnd:0,agi:0,luk:5}
+},
+{
+ name:"エルフ",
+ desc:"魔法に優れる種族。INTとMNDが高い。",
+ bonus:{hp:-10,str:-5,def:0,int:15,mnd:15,agi:5,luk:5}
+},
+{
+ name:"ドワーフ",
+ desc:"頑丈な種族。DEFが高い。",
+ bonus:{hp:20,str:10,def:20,int:-5,mnd:0,agi:-10,luk:0}
+},
+{
+ name:"獣人",
+ desc:"身体能力に優れる。AGIが高い。",
+ bonus:{hp:5,str:10,def:0,int:-5,mnd:0,agi:20,luk:5}
+},
+{
+ name:"小人",
+ desc:"小柄で素早い。回避能力に優れる。",
+ bonus:{hp:-10,str:-5,def:0,int:5,mnd:5,agi:25,luk:10}
+},
+{
+ name:"妖精",
+ desc:"魔力に恵まれた小さな種族。",
+ bonus:{hp:-15,str:-10,def:-5,int:20,mnd:20,agi:10,luk:10}
+},
+{
+ name:"鳥人",
+ desc:"空中での移動を得意とする。",
+ bonus:{hp:0,str:5,def:-5,int:0,mnd:0,agi:20,luk:5}
+},
+{
+ name:"魚人",
+ desc:"水中で圧倒的な能力を発揮する。",
+ bonus:{hp:10,str:5,def:5,int:5,mnd:5,agi:5,luk:0}
+},
+{
+ name:"リザードマン",
+ desc:"強靭な肉体を持つ爬虫類系種族。",
+ bonus:{hp:15,str:10,def:15,int:-5,mnd:0,agi:0,luk:0}
+},
+{
+ name:"ゴブリン",
+ desc:"成長が早い。序盤は弱くても将来性が高い。",
+ bonus:{hp:0,str:0,def:0,int:0,mnd:0,agi:10,luk:10}
+},
+{
+ name:"オーク",
+ desc:"非常に高いHPを持つ。",
+ bonus:{hp:35,str:15,def:10,int:-10,mnd:-5,agi:-15,luk:0}
+},
+{
+ name:"魔族",
+ desc:"闇属性との相性が良い。",
+ bonus:{hp:10,str:5,def:5,int:15,mnd:5,agi:5,luk:5}
+},
+{
+ name:"天使",
+ desc:"光属性と回復魔法に適性がある。",
+ bonus:{hp:0,str:0,def:5,int:10,mnd:25,agi:5,luk:10}
+},
+{
+ name:"竜人",
+ desc:"全体的に高い能力を持つ希少種族。",
+ bonus:{hp:20,str:15,def:15,int:10,mnd:5,agi:5,luk:5}
+},
+{
+ name:"スライム",
+ desc:"状態異常への耐性に優れる。",
+ bonus:{hp:10,str:-5,def:5,int:10,mnd:10,agi:10,luk:5}
+},
+{
+ name:"アンデッド",
+ desc:"毒などの状態異常に強い。",
+ bonus:{hp:15,str:5,def:5,int:10,mnd:-5,agi:-5,luk:5}
+},
+{
+ name:"精霊",
+ desc:"純粋な魔力を持つ存在。",
+ bonus:{hp:-10,str:-10,def:-5,int:25,mnd:20,agi:10,luk:10}
+},
+{
+ name:"人魚",
+ desc:"水属性の魔法と水中活動を得意とする。",
+ bonus:{hp:5,str:-5,def:0,int:15,mnd:15,agi:10,luk:5}
+},
+{
+ name:"巨人族",
+ desc:"圧倒的なHPと力を持つが、動きは遅い。",
+ bonus:{hp:50,str:25,def:20,int:-15,mnd:-5,agi:-25,luk:0}
+},
+{
+ name:"？？？",
+ desc:"条件を満たすことで解放される謎の種族。",
+ bonus:{hp:10,str:10,def:10,int:10,mnd:10,agi:10,luk:10}
+}
+];
+
+
+/* =========================
+   初期職業100種類
+========================= */
+
+const jobs = [
+
+/* 騎士25 */
+"見習い騎士","村の騎士","新米守衛","盾持ち","槍持ち",
+"王国兵","門番","騎士見習い","馬番騎士","鎧兵",
+"旅人騎士","傭兵","街道警備兵","鉄兜兵","森林警備兵",
+"城門兵","神殿警備兵","王都兵","小隊兵","古参兵",
+"重装兵","騎馬兵","守護兵","王国騎士","新人騎士",
+
+/* 魔法使い25 */
+"魔法見習い","杖持ち","火種使い","水滴使い","そよ風使い",
+"小石魔術師","明かり魔術師","薬草魔術師","初級魔術師","村の魔法使い",
+"魔法研究生","魔法学校生","魔法助手","占い師","星見習い",
+"精霊見習い","回復見習い","結界見習い","召喚見習い","呪文書係",
+"魔道具係","魔法薬係","古書魔術師","初級魔導師","新人魔法使い",
+
+/* 剣士25 */
+"木刀使い","剣士見習い","村の剣士","新米剣士","素振り剣士",
+"片手剣士","木剣兵","旅の剣士","訓練兵","剣術生徒",
+"見習い兵士","二刀流見習い","刀見習い","大剣見習い","剣技研究生",
+"道場生","道場見習い","街道剣士","用心棒","傭兵剣士",
+"王都剣士","古参剣士","剣術兵","剣闘士見習い","新人剣士",
+
+/* 非戦闘職25 */
+"農家","採集家","木こり","鉱夫","釣り師",
+"料理人","パン職人","商人","行商人","鍛冶見習い",
+"裁縫師","靴職人","大工","建築助手","薬草師",
+"掃除人","配達員","馬番","飼育係","牧場主",
+"地図描き","鑑定見習い","楽師","芸術家","村人"
+];
+
+
+/* 職業タイプ */
+
+function getJobType(job){
+
+    const knight = jobs.slice(0,25);
+    const mage = jobs.slice(25,50);
+    const sword = jobs.slice(50,75);
+
+    if(knight.includes(job)) return "騎士";
+    if(mage.includes(job)) return "魔法使い";
+    if(sword.includes(job)) return "剣士";
+
+    return "非戦闘職";
 }
 
-function showCharacter() {
-    hideAllPanels();
-    document.getElementById("characterPanel").classList.remove("hidden");
+
+/* 職業補正 */
+
+function getJobBonus(job){
+
+    const type=getJobType(job);
+
+    if(type==="騎士")
+        return {hp:30,str:5,def:15,int:-5,mnd:0,agi:-5,luk:0};
+
+    if(type==="魔法使い")
+        return {hp:-10,str:-5,def:-5,int:20,mnd:15,agi:0,luk:5};
+
+    if(type==="剣士")
+        return {hp:5,str:20,def:5,int:-5,mnd:0,agi:15,luk:5};
+
+    return {hp:0,str:0,def:0,int:0,mnd:0,agi:5,luk:15};
 }
 
-function showWorld() {
-    hideAllPanels();
-    document.getElementById("worldPanel").classList.remove("hidden");
+
+/* =========================
+   初期化
+========================= */
+
+const raceSelect=document.getElementById("race");
+const jobSelect=document.getElementById("job");
+
+races.forEach((race,i)=>{
+    const option=document.createElement("option");
+    option.value=i;
+    option.textContent=race.name;
+    raceSelect.appendChild(option);
+});
+
+jobs.forEach((job,i)=>{
+    const option=document.createElement("option");
+    option.value=i;
+    option.textContent=`${job}（${getJobType(job)}）`;
+    jobSelect.appendChild(option);
+});
+
+updateCharacter();
+
+
+/* =========================
+   ステータス更新
+========================= */
+
+function updateCharacter(){
+
+    const race=races[Number(raceSelect.value)];
+    const job=jobs[Number(jobSelect.value)];
+
+    const rb=race.bonus;
+    const jb=getJobBonus(job);
+
+    const base={
+        hp:100,
+        str:20,
+        def:20,
+        int:20,
+        mnd:20,
+        agi:20,
+        luk:20
+    };
+
+    for(const key in base){
+        base[key]+=rb[key]+jb[key];
+    }
+
+    document.getElementById("hp").textContent=base.hp;
+    document.getElementById("str").textContent=base.str;
+    document.getElementById("def").textContent=base.def;
+    document.getElementById("int").textContent=base.int;
+    document.getElementById("mnd").textContent=base.mnd;
+    document.getElementById("agi").textContent=base.agi;
+    document.getElementById("luk").textContent=base.luk;
+
+    document.getElementById("raceInfo").innerHTML=
+        `<b>${race.name}</b><br>${race.desc}`;
+
+    document.getElementById("jobInfo").innerHTML=
+        `<b>${job}</b> ― ${getJobType(job)}<br>
+        ${getJobDescription(job)}`;
 }
 
-function showOptions() {
-    hideAllPanels();
-    document.getElementById("optionsPanel").classList.remove("hidden");
+
+function getJobDescription(job){
+
+    const type=getJobType(job);
+
+    if(type==="騎士")
+        return "HP・防御力に優れる。仲間を守る戦い方が得意。";
+
+    if(type==="魔法使い")
+        return "魔法攻撃・回復・補助に優れる。";
+
+    if(type==="剣士")
+        return "物理攻撃と素早さを活かして戦う。";
+
+    return "戦闘以外の活動で力を発揮する。";
+
 }
 
-function closePanel() {
-    hideAllPanels();
+
+/* =========================
+   画面切り替え
+========================= */
+
+function hideScreens(){
+
+    document.querySelectorAll(".screen")
+        .forEach(s=>s.classList.add("hidden"));
+
 }
 
-function startGame() {
-    showCharacter();
+function openCreate(){
+
+    hideScreens();
+
+    document.getElementById("createScreen")
+        .classList.remove("hidden");
+
+}
+
+function backTitle(){
+
+    hideScreens();
+
+    document.getElementById("titleScreen")
+        .classList.remove("hidden");
+
+}
+
+
+/* =========================
+   キャラクター完成
+========================= */
+
+function createCharacter(){
+
+    const name=document.getElementById("name").value.trim();
+
+    if(!name){
+
+        alert("キャラクター名を入力してください。");
+
+        return;
+    }
+
+    const race=races[Number(raceSelect.value)];
+    const job=jobs[Number(jobSelect.value)];
+
+    const character={
+        name:name,
+        race:race.name,
+        job:job,
+        level:1,
+        hp:Number(document.getElementById("hp").textContent),
+        str:Number(document.getElementById("str").textContent),
+        def:Number(document.getElementById("def").textContent),
+        int:Number(document.getElementById("int").textContent),
+        mnd:Number(document.getElementById("mnd").textContent),
+        agi:Number(document.getElementById("agi").textContent),
+        luk:Number(document.getElementById("luk").textContent)
+    };
+
+    localStorage.setItem(
+        "isekaiCharacter",
+        JSON.stringify(character)
+    );
+
+    document.getElementById("characterResult").innerHTML=`
+
+        <h3>${character.name}</h3>
+
+        <p>
+        種族：${character.race}<br>
+        職業：${character.job}<br>
+        Lv.${character.level}
+        </p>
+
+        <div class="stats">
+
+        <div class="stat">HP <b>${character.hp}</b></div>
+        <div class="stat">STR <b>${character.str}</b></div>
+        <div class="stat">DEF <b>${character.def}</b></div>
+        <div class="stat">INT <b>${character.int}</b></div>
+        <div class="stat">MND <b>${character.mnd}</b></div>
+        <div class="stat">AGI <b>${character.agi}</b></div>
+        <div class="stat">LUK <b>${character.luk}</b></div>
+
+        </div>
+    `;
+
+    hideScreens();
+
+    document.getElementById("completeScreen")
+        .classList.remove("hidden");
+}
+
+
+/* =========================
+   セーブキャラ
+========================= */
+
+function showSaved(){
+
+    hideScreens();
+
+    const data=localStorage.getItem("isekaiCharacter");
+
+    const result=document.getElementById("savedResult");
+
+    if(!data){
+
+        result.innerHTML=
+            "<p>保存されたキャラクターはありません。</p>";
+
+    }else{
+
+        const c=JSON.parse(data);
+
+        result.innerHTML=`
+            <h3>${c.name}</h3>
+            <p>
+            種族：${c.race}<br>
+            職業：${c.job}<br>
+            Lv.${c.level}
+            </p>
+        `;
+    }
+
+    document.getElementById("savedScreen")
+        .classList.remove("hidden");
+}
+
+
+/* =========================
+   WORLD
+========================= */
+
+function showWorld(){
+
+    hideScreens();
+
+    document.getElementById("worldScreen")
+        .classList.remove("hidden");
+
+}
+
+function enterWorld(){
+
+    alert(
+        "キャラクター登録完了！\n\n"+
+        "次のアップデートで「始まりの街」を実装します。"
+    );
+
+    backTitle();
 }
 
 </script>
