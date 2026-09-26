@@ -8,266 +8,630 @@
 <style>
 *{
   box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
+  user-select:none;
+  -webkit-user-select:none;
+  -webkit-touch-callout:none;
 }
+
 html,body{
   margin:0;
   width:100%;
   height:100%;
   overflow:hidden;
   background:#000;
-  font-family:system-ui,sans-serif;
-  touch-action:none;
+  font-family:
+    "Yu Gothic",
+    "Hiragino Kaku Gothic ProN",
+    sans-serif;
 }
+
+button{
+  font-family:inherit;
+  cursor:pointer;
+}
+
+/* =========================
+   ホーム画面
+========================= */
+
+#home{
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 35%,rgba(90,140,255,.25),transparent 35%),
+    linear-gradient(#081226,#02040a);
+  color:white;
+}
+
+#home::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 20% 20%,#fff 0 1px,transparent 2px),
+    radial-gradient(circle at 70% 30%,#fff 0 1px,transparent 2px),
+    radial-gradient(circle at 40% 75%,#fff 0 1px,transparent 2px),
+    radial-gradient(circle at 85% 80%,#fff 0 1px,transparent 2px);
+  background-size:180px 150px,240px 190px,210px 170px,260px 200px;
+  opacity:.55;
+}
+
+.homeBox{
+  position:relative;
+  width:min(560px,92vw);
+  text-align:center;
+  padding:35px 25px 30px;
+}
+
+.title{
+  font-size:clamp(42px,9vw,78px);
+  font-weight:900;
+  letter-spacing:5px;
+  text-shadow:
+    0 0 10px #7db7ff,
+    0 0 35px #315bff,
+    4px 5px 0 #111;
+  margin-bottom:5px;
+}
+
+.subtitle{
+  color:#b9d7ff;
+  letter-spacing:8px;
+  font-size:14px;
+  margin-bottom:35px;
+}
+
+.homeButton{
+  display:block;
+  width:100%;
+  max-width:390px;
+  margin:12px auto;
+  padding:16px 20px;
+  border:2px solid rgba(255,255,255,.65);
+  border-radius:10px;
+  background:linear-gradient(#243e69,#10213c);
+  color:#fff;
+  font-size:20px;
+  font-weight:bold;
+  box-shadow:0 5px 18px rgba(0,0,0,.5);
+}
+
+.homeButton:hover{
+  background:linear-gradient(#416ba8,#18345d);
+  transform:translateY(-2px);
+}
+
+.homeButton.main{
+  font-size:25px;
+  border-color:#9ed0ff;
+  background:linear-gradient(#3978c7,#183967);
+}
+
+.version{
+  margin-top:25px;
+  color:#71819b;
+  font-size:12px;
+}
+
+/* =========================
+   キャラ作成画面
+========================= */
+
+#creation{
+  position:fixed;
+  inset:0;
+  z-index:900;
+  display:none;
+  color:white;
+  background:
+    radial-gradient(circle at 50% 20%,#254b78,transparent 45%),
+    #060a12;
+  overflow:auto;
+  padding:25px;
+}
+
+.createBox{
+  width:min(1000px,100%);
+  margin:auto;
+  padding-bottom:30px;
+}
+
+.createTitle{
+  text-align:center;
+  font-size:34px;
+  margin:5px 0 25px;
+}
+
+.section{
+  margin:18px 0;
+  padding:18px;
+  border:1px solid #45617f;
+  border-radius:12px;
+  background:rgba(8,18,32,.88);
+}
+
+.section h2{
+  margin:0 0 14px;
+  font-size:21px;
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
+  gap:10px;
+}
+
+.selectCard{
+  padding:15px 10px;
+  border:2px solid #35475d;
+  border-radius:10px;
+  background:#101b2b;
+  color:white;
+  text-align:left;
+}
+
+.selectCard:hover{
+  border-color:#78b9ff;
+}
+
+.selectCard.selected{
+  border-color:#ffe27a;
+  background:linear-gradient(#263c5c,#172337);
+  box-shadow:0 0 14px rgba(255,220,100,.25);
+}
+
+.cardName{
+  font-weight:bold;
+  font-size:17px;
+}
+
+.cardDesc{
+  color:#9eb1c9;
+  font-size:12px;
+  margin-top:5px;
+  line-height:1.5;
+}
+
+.stat{
+  margin-top:6px;
+  font-size:11px;
+  color:#d8e7ff;
+}
+
+.nameInput{
+  width:100%;
+  max-width:500px;
+  padding:13px;
+  border-radius:8px;
+  border:1px solid #536b87;
+  background:#0b1320;
+  color:white;
+  font-size:18px;
+}
+
+.startGame{
+  display:block;
+  width:min(450px,100%);
+  margin:25px auto 5px;
+  padding:17px;
+  border:2px solid #ffd968;
+  border-radius:10px;
+  background:linear-gradient(#80651e,#4c3b10);
+  color:#fff;
+  font-size:22px;
+  font-weight:bold;
+}
+
+/* =========================
+   ゲーム
+========================= */
+
 #game{
   position:fixed;
   inset:0;
+  display:none;
 }
+
+canvas{
+  display:block;
+}
+
 #hud{
   position:fixed;
   left:15px;
   top:15px;
-  z-index:10;
+  z-index:20;
   color:white;
-  background:rgba(5,12,25,.82);
+  min-width:245px;
+  padding:12px;
+  border-radius:10px;
+  background:rgba(5,10,18,.78);
   border:1px solid rgba(255,255,255,.25);
-  border-radius:14px;
-  padding:13px 16px;
-  min-width:255px;
-  backdrop-filter:blur(8px);
+  box-shadow:0 4px 15px #0008;
 }
-.title{
-  font-size:20px;
+
+#playerName{
+  font-size:19px;
   font-weight:bold;
-  margin-bottom:5px;
 }
+
+.small{
+  font-size:12px;
+  color:#b9c7d8;
+}
+
 .bar{
   width:220px;
   height:10px;
-  background:#333;
-  border-radius:10px;
+  background:#202936;
+  border-radius:8px;
   overflow:hidden;
-  margin:3px 0 7px;
+  margin-top:5px;
 }
-.fill{
+
+.barFill{
   height:100%;
-  background:#42d879;
+  width:100%;
 }
-.mpFill{
-  background:#4388ff;
-}
-#help{
-  position:fixed;
-  left:15px;
-  bottom:15px;
-  z-index:10;
-  color:white;
-  background:rgba(0,0,0,.65);
-  border-radius:10px;
-  padding:10px 13px;
-  font-size:13px;
-}
-#cross{
-  position:fixed;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  color:white;
-  z-index:5;
-  font-size:23px;
-  text-shadow:0 0 5px black;
-}
+
+.hpFill{background:#e74c3c}
+.mpFill{background:#3498db}
+.expFill{background:#f1c40f}
+
 #message{
   position:fixed;
+  bottom:90px;
   left:50%;
-  bottom:80px;
   transform:translateX(-50%);
-  z-index:20;
-  color:white;
-  background:rgba(0,0,0,.8);
-  border-radius:12px;
-  padding:11px 20px;
-  display:none;
-}
-#menu{
-  position:fixed;
-  right:15px;
-  top:15px;
   z-index:30;
-  width:330px;
+  padding:9px 18px;
+  color:white;
+  background:rgba(0,0,0,.7);
+  border-radius:8px;
+  pointer-events:none;
+}
+
+/* =========================
+   メニュー
+========================= */
+
+#menu{
+  display:none;
+  position:fixed;
+  right:18px;
+  top:18px;
+  z-index:100;
+  width:min(400px,92vw);
   max-height:85vh;
   overflow:auto;
   color:white;
-  background:rgba(7,14,28,.95);
-  border:1px solid rgba(255,255,255,.25);
-  border-radius:15px;
-  padding:15px;
-  display:none;
-}
-.skill{
-  background:rgba(255,255,255,.08);
-  border-radius:8px;
-  padding:8px;
-  margin:5px 0;
-}
-.locked{
-  opacity:.45;
-}
-button{
-  color:white;
-  background:#294c7c;
-  border:0;
-  border-radius:8px;
-  padding:8px 11px;
-  font-weight:bold;
-}
-button:active{
-  transform:scale(.95);
+  background:rgba(8,13,22,.96);
+  border:1px solid #6985a5;
+  border-radius:12px;
+  padding:18px;
 }
 
-/* iPad */
+#menu h2{
+  margin-top:0;
+}
+
+.menuButton{
+  width:100%;
+  margin:5px 0;
+  padding:11px;
+  color:white;
+  background:#17263a;
+  border:1px solid #47627f;
+  border-radius:7px;
+}
+
+.skill{
+  padding:10px;
+  margin:7px 0;
+  border:1px solid #3e536c;
+  border-radius:7px;
+  background:#101b2a;
+}
+
+.skill button{
+  float:right;
+  color:white;
+  background:#315e91;
+  border:0;
+  padding:6px 10px;
+  border-radius:5px;
+}
+
+.skill.learned{
+  border-color:#e5c65b;
+}
+
+/* =========================
+   タッチ操作
+========================= */
+
 #touchUI{
   display:none;
   position:fixed;
   inset:0;
-  z-index:15;
+  z-index:50;
   pointer-events:none;
 }
+
 #joystick{
   position:absolute;
-  left:25px;
-  bottom:30px;
-  width:145px;
-  height:145px;
+  left:22px;
+  bottom:25px;
+  width:125px;
+  height:125px;
   border-radius:50%;
-  background:rgba(255,255,255,.16);
+  background:rgba(255,255,255,.12);
   border:2px solid rgba(255,255,255,.35);
   pointer-events:auto;
 }
+
 #knob{
   position:absolute;
-  left:43px;
-  top:43px;
-  width:55px;
-  height:55px;
+  width:52px;
+  height:52px;
+  left:35px;
+  top:35px;
   border-radius:50%;
-  background:rgba(255,255,255,.5);
-  border:2px solid white;
+  background:rgba(255,255,255,.42);
 }
+
 #cameraArea{
   position:absolute;
+  left:25%;
   right:0;
   top:0;
-  width:55%;
-  height:72%;
+  bottom:30%;
   pointer-events:auto;
 }
+
 #actions{
   position:absolute;
   right:18px;
-  bottom:20px;
+  bottom:18px;
   display:grid;
-  grid-template-columns:75px 75px;
-  gap:9px;
+  grid-template-columns:repeat(2,75px);
+  gap:10px;
   pointer-events:auto;
 }
+
 .touchButton{
   width:75px;
-  height:65px;
-  border-radius:18px;
-  background:rgba(15,35,65,.88);
-  border:1px solid rgba(255,255,255,.3);
+  height:58px;
+  border-radius:50%;
+  border:1px solid #fff8;
   color:white;
-  font-size:13px;
+  background:rgba(15,30,50,.75);
+  font-weight:bold;
 }
+
 @media(pointer:coarse){
   #touchUI{
     display:block;
   }
-  #help{
-    display:none;
-  }
+}
+
+/* 戦闘UI */
+
+#battleUI{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:200;
+  background:linear-gradient(#111b2c,#070b12);
+  color:white;
+}
+
+#battleTop{
+  padding:20px;
+  text-align:center;
+}
+
+#enemyName{
+  font-size:28px;
+  font-weight:bold;
+}
+
+.enemyBar{
+  width:min(500px,80vw);
+  height:18px;
+  background:#222;
+  margin:10px auto;
+  border-radius:10px;
+  overflow:hidden;
+}
+
+#enemyHP{
+  width:100%;
+  height:100%;
+  background:#e74c3c;
+}
+
+#battleLog{
+  width:min(700px,90vw);
+  height:180px;
+  overflow:auto;
+  margin:20px auto;
+  padding:12px;
+  background:#05080d;
+  border:1px solid #42536b;
+  border-radius:8px;
+}
+
+#battleCommands{
+  width:min(700px,90vw);
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+
+.battleButton{
+  padding:18px;
+  font-size:18px;
+  border-radius:8px;
+  border:1px solid #6e819a;
+  background:#18283d;
+  color:white;
 }
 </style>
 </head>
 
 <body>
 
-<div id="game"></div>
-<div id="cross">+</div>
+<!-- =========================
+     ホーム
+========================= -->
 
-<div id="hud">
-  <div class="title">⚔️ 異世界オンライン</div>
-  <div>
-    <span id="job">二刀流見習い</span>
-    /
-    <span id="race">オーク</span>
-  </div>
+<div id="home">
+  <div class="homeBox">
+    <div class="title">異世界オンライン</div>
+    <div class="subtitle">ISEKAI ONLINE</div>
 
-  <div>
-    Lv.<span id="level">1</span>
-   　
-    EXP <span id="exp">0</span>/100
-  </div>
+    <button class="homeButton main" onclick="openCreation()">
+      ▶ はじめる
+    </button>
 
-  <div>
-    HP <span id="hp">55</span>/<span id="maxHp">55</span>
-  </div>
-  <div class="bar">
-    <div id="hpBar" class="fill" style="width:100%"></div>
-  </div>
+    <button class="homeButton" onclick="showJobBook()">
+      📖 職業・種族図鑑
+    </button>
 
-  <div>
-    MP <span id="mp">20</span>/<span id="maxMp">20</span>
-  </div>
-  <div class="bar">
-    <div id="mpBar" class="fill mpFill" style="width:100%"></div>
-  </div>
+    <button class="homeButton" onclick="showSettings()">
+      ⚙ 設定
+    </button>
 
-  <div>
-    SP <span id="sp">0</span>
-   　
-    💰 <span id="gold">100</span>
+    <div class="version">EARLY ACCESS PROTOTYPE</div>
   </div>
 </div>
 
-<div id="help">
-  WASD：移動　Shift：ダッシュ　Space：ジャンプ　E：攻撃　M：メニュー
+<!-- =========================
+     キャラクター作成
+========================= -->
+
+<div id="creation">
+  <div class="createBox">
+
+    <div class="createTitle">キャラクターを作成</div>
+
+    <div class="section">
+      <h2>名前</h2>
+      <input
+        id="nameInput"
+        class="nameInput"
+        maxlength="12"
+        value="冒険者"
+        placeholder="名前を入力"
+      >
+    </div>
+
+    <div class="section">
+      <h2>種族を選択</h2>
+      <div id="raceCards" class="cards"></div>
+    </div>
+
+    <div class="section">
+      <h2>最初の職業を選択</h2>
+      <div id="jobCards" class="cards"></div>
+    </div>
+
+    <button class="startGame" onclick="startGame()">
+      ⚔ このキャラクターで冒険を始める
+    </button>
+
+    <button class="homeButton" onclick="backHome()">
+      ← ホームへ戻る
+    </button>
+
+  </div>
 </div>
 
-<div id="message"></div>
-<div id="menu"></div>
+<!-- =========================
+     ゲーム
+========================= -->
 
-<!-- iPad操作 -->
-<div id="touchUI">
+<div id="game">
 
-  <div id="joystick">
-    <div id="knob"></div>
+  <div id="hud">
+    <div id="playerName">冒険者</div>
+    <div class="small" id="playerInfo">人間 / 見習い騎士</div>
+
+    <div class="small">HP</div>
+    <div class="bar">
+      <div id="hpBar" class="barFill hpFill"></div>
+    </div>
+
+    <div class="small">MP</div>
+    <div class="bar">
+      <div id="mpBar" class="barFill mpFill"></div>
+    </div>
+
+    <div class="small">EXP</div>
+    <div class="bar">
+      <div id="expBar" class="barFill expFill"></div>
+    </div>
+
+    <div class="small" id="levelInfo">
+      Lv.1　SP 0　G 100
+    </div>
   </div>
 
-  <div id="cameraArea"></div>
+  <div id="message">街を探索しよう。</div>
 
-  <div id="actions">
+  <div id="menu">
+    <h2>メニュー</h2>
+    <div id="menuStatus"></div>
+    <hr>
 
-    <button class="touchButton" id="attackButton">
-      ⚔️<br>攻撃
-    </button>
+    <h3>スキルツリー</h3>
+    <div id="skillList"></div>
 
-    <button class="touchButton" id="jumpButton">
-      🦘<br>ジャンプ
-    </button>
+    <button class="menuButton" onclick="closeMenu()">閉じる</button>
+  </div>
 
-    <button class="touchButton" id="dashButton">
-      🏃<br>ダッシュ
-    </button>
+  <!-- 戦闘 -->
+  <div id="battleUI">
+    <div id="battleTop">
+      <div id="enemyName">スライム</div>
+      <div class="enemyBar">
+        <div id="enemyHP"></div>
+      </div>
+      <div id="enemyStatus">HP 30 / 30</div>
+    </div>
 
-    <button class="touchButton" id="skillButton">
-      ✨<br>スキル
-    </button>
+    <div id="battleLog"></div>
 
-    <button class="touchButton" id="menuButton">
-      🎒<br>メニュー
-    </button>
+    <div id="battleCommands">
+      <button class="battleButton" onclick="battleAttack()">⚔ こうげき</button>
+      <button class="battleButton" onclick="battleSkill()">✨ スキル</button>
+      <button class="battleButton" onclick="battleGuard()">🛡 ぼうぎょ</button>
+      <button class="battleButton" onclick="battleEscape()">🏃 にげる</button>
+    </div>
+  </div>
+
+  <!-- iPad操作 -->
+  <div id="touchUI">
+
+    <div id="joystick">
+      <div id="knob"></div>
+    </div>
+
+    <div id="cameraArea"></div>
+
+    <div id="actions">
+      <button class="touchButton" onclick="attackNearest()">⚔<br>攻撃</button>
+      <button class="touchButton" onclick="openMenu()">☰<br>MENU</button>
+      <button class="touchButton" onclick="jump()">↑<br>ジャンプ</button>
+      <button class="touchButton" onclick="dash()">⚡<br>ダッシュ</button>
+    </div>
 
   </div>
 </div>
@@ -278,718 +642,763 @@ button:active{
 <script>
 
 /* =========================================================
-   3D WORLD
+   データ
 ========================================================= */
 
-const scene = new THREE.Scene();
+const races = [
+  {
+    name:"人間",
+    desc:"バランスの良い種族。成長の自由度が高い。",
+    bonus:"全能力バランス"
+  },
+  {
+    name:"エルフ",
+    desc:"魔力に優れた森の民。",
+    bonus:"INT・MND"
+  },
+  {
+    name:"ドワーフ",
+    desc:"頑丈な身体を持つ職人気質の種族。",
+    bonus:"DEF・HP"
+  },
+  {
+    name:"獣人",
+    desc:"身体能力に優れる。",
+    bonus:"AGI・STR"
+  },
+  {
+    name:"小人",
+    desc:"小柄で素早い種族。",
+    bonus:"AGI・回避"
+  },
+  {
+    name:"妖精",
+    desc:"魔法との相性が良い。",
+    bonus:"INT"
+  },
+  {
+    name:"鳥人",
+    desc:"空を飛ぶ能力を持つ。",
+    bonus:"AGI"
+  },
+  {
+    name:"魚人",
+    desc:"水中で高い能力を発揮する。",
+    bonus:"水適性"
+  },
+  {
+    name:"リザードマン",
+    desc:"硬い鱗を持つ戦士種族。",
+    bonus:"DEF"
+  },
+  {
+    name:"ゴブリン",
+    desc:"成長が少し早い。",
+    bonus:"成長速度"
+  },
+  {
+    name:"オーク",
+    desc:"高い体力を持つ種族。",
+    bonus:"HP"
+  },
+  {
+    name:"魔族",
+    desc:"闇属性との相性が良い。",
+    bonus:"闇魔法"
+  },
+  {
+    name:"天使",
+    desc:"光属性との相性が良い。",
+    bonus:"光魔法"
+  },
+  {
+    name:"竜人",
+    desc:"全体的に高い能力を持つ。",
+    bonus:"総合能力"
+  },
+  {
+    name:"スライム",
+    desc:"特殊な身体を持つ。",
+    bonus:"状態異常耐性"
+  },
+  {
+    name:"アンデッド",
+    desc:"毒などへの耐性を持つ。",
+    bonus:"毒耐性"
+  },
+  {
+    name:"精霊",
+    desc:"魔法適性が高い。",
+    bonus:"魔法"
+  },
+  {
+    name:"人魚",
+    desc:"水属性との相性が良い。",
+    bonus:"水魔法"
+  },
+  {
+    name:"巨人族",
+    desc:"非常に高いHPを持つが遅い。",
+    bonus:"HP・DEF"
+  }
+];
 
-scene.background = new THREE.Color(0x88bce5);
+/* 最初の100職業のうち、ここでは代表25職を表示 */
+const jobs = [
+  {name:"見習い騎士",type:"騎士",desc:"騎士を目指す新人。",sp:2},
+  {name:"村の騎士",type:"騎士",desc:"村を守る新人騎士。",sp:2},
+  {name:"新米守衛",type:"騎士",desc:"町の門を守る。",sp:2},
+  {name:"盾持ち",type:"騎士",desc:"盾を扱う訓練を受けた兵。",sp:2},
+  {name:"槍持ち",type:"騎士",desc:"槍を扱う見習い兵。",sp:2},
 
-scene.fog = new THREE.Fog(
-  0x88bce5,
-  45,
-  180
-);
+  {name:"魔法見習い",type:"魔法使い",desc:"魔法を学び始めたばかり。",sp:3},
+  {name:"杖持ち",type:"魔法使い",desc:"杖を使う新人魔法使い。",sp:3},
+  {name:"火種使い",type:"魔法使い",desc:"小さな火を操る。",sp:3},
+  {name:"水滴使い",type:"魔法使い",desc:"水を少し操れる。",sp:3},
+  {name:"そよ風使い",type:"魔法使い",desc:"小さな風を起こす。",sp:3},
 
-const camera = new THREE.PerspectiveCamera(
-  60,
-  innerWidth / innerHeight,
-  0.1,
-  500
-);
+  {name:"木刀使い",type:"剣士",desc:"木刀で鍛錬する新人。",sp:2},
+  {name:"剣士見習い",type:"剣士",desc:"剣術を学ぶ新人。",sp:2},
+  {name:"村の剣士",type:"剣士",desc:"村で剣を教わった者。",sp:2},
+  {name:"新米剣士",type:"剣士",desc:"冒険を始めたばかり。",sp:2},
+  {name:"素振り剣士",type:"剣士",desc:"ひたすら剣を振っている。",sp:2},
 
-camera.position.set(
-  0,
-  5,
-  10
-);
+  {name:"農家",type:"非戦闘職",desc:"作物を育てる職業。",sp:4},
+  {name:"採集家",type:"非戦闘職",desc:"野外で素材を集める。",sp:4},
+  {name:"木こり",type:"非戦闘職",desc:"木材を集める。",sp:4},
+  {name:"鉱夫",type:"非戦闘職",desc:"鉱石を掘る。",sp:4},
+  {name:"釣り師",type:"非戦闘職",desc:"魚を釣る。",sp:4},
 
-const renderer = new THREE.WebGLRenderer({
-  antialias:true
-});
+  {name:"料理人",type:"非戦闘職",desc:"料理を作る。",sp:4},
+  {name:"商人",type:"非戦闘職",desc:"売買を得意とする。",sp:4},
+  {name:"鍛冶見習い",type:"非戦闘職",desc:"武器や防具を作る。",sp:4},
+  {name:"地図描き",type:"非戦闘職",desc:"世界を探索して地図を作る。",sp:4},
+  {name:"村人",type:"非戦闘職",desc:"普通の村人。可能性は未知数。",sp:5}
+];
 
-renderer.setSize(
-  innerWidth,
-  innerHeight
-);
+const skillTrees = {
+  "剣士":[
+    ["剣術","強撃","連撃","会心斬り"],
+    ["受け流し","防御姿勢","反撃","鉄壁"],
+    ["身軽","疾走","高速斬撃","瞬歩"]
+  ],
+  "騎士":[
+    ["盾術","シールドバッシュ","守護","大盾"],
+    ["防御訓練","鉄壁","守護陣","不屈"],
+    ["槍術","突進","貫通突き","騎士突撃"]
+  ],
+  "魔法使い":[
+    ["魔力操作","火球","大火球","爆炎"],
+    ["水魔法","氷結","氷槍","絶対零度"],
+    ["魔力回復","魔力増幅","詠唱短縮","大魔法"]
+  ],
+  "非戦闘職":[
+    ["採集術","素材発見","希少素材発見","宝探し"],
+    ["生活術","料理強化","制作強化","職人の心得"],
+    ["商才","値引き","高値売却","大商人"]
+  ]
+};
 
-renderer.setPixelRatio(
-  Math.min(devicePixelRatio,2)
-);
+/* =========================================================
+   プレイヤーデータ
+========================================================= */
 
-renderer.shadowMap.enabled = true;
+let player = {
+  name:"冒険者",
+  race:"人間",
+  job:"見習い騎士",
 
-document
-  .getElementById("game")
-  .appendChild(renderer.domElement);
+  level:1,
+  exp:0,
+  expNext:100,
+  sp:0,
+  gold:100,
 
+  maxHP:100,
+  hp:100,
+  maxMP:30,
+  mp:30,
 
-/* LIGHT */
+  str:10,
+  def:10,
+  int:10,
+  mnd:10,
+  agi:10,
 
-scene.add(
-  new THREE.HemisphereLight(
-    0xeaf4ff,
-    0x405238,
-    2
-  )
-);
+  learned:[]
+};
 
-const sun =
-  new THREE.DirectionalLight(
-    0xffffff,
-    2.4
-  );
+let selectedRace = "人間";
+let selectedJob = "見習い騎士";
 
-sun.position.set(
-  -40,
-  60,
-  30
-);
+/* =========================================================
+   ホーム・キャラ作成
+========================================================= */
 
-sun.castShadow = true;
+function openCreation(){
 
-scene.add(sun);
+  document.getElementById("home").style.display="none";
+  document.getElementById("creation").style.display="block";
 
+  renderRaces();
+  renderJobs();
+}
 
-/* MATERIAL */
+function backHome(){
 
-function material(color){
-  return new THREE.MeshStandardMaterial({
-    color:color
+  document.getElementById("creation").style.display="none";
+  document.getElementById("home").style.display="flex";
+}
+
+function renderRaces(){
+
+  const box=document.getElementById("raceCards");
+  box.innerHTML="";
+
+  races.forEach(r=>{
+
+    const card=document.createElement("button");
+
+    card.className="selectCard"+
+      (r.name===selectedRace ? " selected":"");
+
+    card.innerHTML=`
+      <div class="cardName">${r.name}</div>
+      <div class="cardDesc">${r.desc}</div>
+      <div class="stat">特徴：${r.bonus}</div>
+    `;
+
+    card.onclick=()=>{
+
+      selectedRace=r.name;
+      renderRaces();
+
+    };
+
+    box.appendChild(card);
+
   });
 }
 
+function renderJobs(){
 
-/* GROUND */
+  const box=document.getElementById("jobCards");
+  box.innerHTML="";
 
-const ground =
-  new THREE.Mesh(
-    new THREE.PlaneGeometry(
-      220,
-      220
-    ),
-    material(0x4c884a)
-  );
+  jobs.forEach(j=>{
 
-ground.rotation.x =
-  -Math.PI / 2;
+    const card=document.createElement("button");
 
-ground.receiveShadow = true;
+    card.className="selectCard"+
+      (j.name===selectedJob ? " selected":"");
 
-scene.add(ground);
+    card.innerHTML=`
+      <div class="cardName">${j.name}</div>
+      <div class="cardDesc">${j.desc}</div>
+      <div class="stat">${j.type} / SP獲得 ${j.sp}</div>
+    `;
 
+    card.onclick=()=>{
 
-/* BOX */
+      selectedJob=j.name;
+      renderJobs();
 
-function createBox(
-  x,
-  y,
-  z,
-  sx,
-  sy,
-  sz,
-  color
-){
+    };
 
-  const mesh =
-    new THREE.Mesh(
-      new THREE.BoxGeometry(
-        sx,
-        sy,
-        sz
-      ),
-      material(color)
-    );
+    box.appendChild(card);
 
-  mesh.position.set(
-    x,
-    y,
-    z
-  );
-
-  mesh.castShadow = true;
-  mesh.receiveShadow = true;
-
-  scene.add(mesh);
-
-  return mesh;
+  });
 }
 
+function startGame(){
+
+  const name=
+    document.getElementById("nameInput").value.trim();
+
+  player.name=name || "冒険者";
+  player.race=selectedRace;
+  player.job=selectedJob;
+
+  const job=jobs.find(j=>j.name===selectedJob);
+
+  /* 種族補正 */
+  player.maxHP=100;
+  player.maxMP=30;
+
+  player.str=10;
+  player.def=10;
+  player.int=10;
+  player.mnd=10;
+  player.agi=10;
+
+  if(player.race==="オーク"){
+    player.maxHP+=25;
+  }
+
+  if(player.race==="ドワーフ"){
+    player.def+=4;
+    player.maxHP+=15;
+  }
+
+  if(player.race==="獣人"){
+    player.agi+=4;
+    player.str+=2;
+  }
+
+  if(player.race==="エルフ"){
+    player.int+=4;
+    player.mnd+=3;
+  }
+
+  if(player.race==="竜人"){
+    player.str+=3;
+    player.def+=3;
+    player.int+=2;
+  }
+
+  /* 職業補正 */
+  if(job.type==="騎士"){
+    player.maxHP+=20;
+    player.def+=4;
+  }
+
+  if(job.type==="剣士"){
+    player.str+=4;
+    player.agi+=3;
+  }
+
+  if(job.type==="魔法使い"){
+    player.maxMP+=30;
+    player.int+=5;
+    player.mnd+=3;
+  }
+
+  player.hp=player.maxHP;
+  player.mp=player.maxMP;
+
+  document.getElementById("creation").style.display="none";
+  document.getElementById("game").style.display="block";
+
+  init3D();
+  updateHUD();
+
+  showMessage(
+    `${player.name}、冒険の始まりだ！`
+  );
+}
 
 /* =========================================================
-   TOWN
+   図鑑・設定
 ========================================================= */
 
-/* 道路 */
+function showJobBook(){
 
-createBox(
-  0,
-  .03,
-  0,
-  18,
-  .1,
-  220,
-  0xb49b70
-);
+  alert(
+`【職業・種族図鑑】
 
-createBox(
-  0,
-  .04,
-  0,
-  220,
-  .1,
-  18,
-  0xb49b70
-);
+初期職業は100種類存在します。
 
+騎士：25職
+魔法使い：25職
+剣士：25職
+非戦闘職：25職
 
-/* 城壁 */
+さらに冒険を進めることで、
+上位職・特殊職・隠し職が解放されます。
 
-createBox(
-  -32,
-  3,
-  0,
-  2,
-  6,
-  64,
-  0x777777
-);
+種族も進行によって増える予定です。`
+  );
+}
 
-createBox(
-  32,
-  3,
-  0,
-  2,
-  6,
-  64,
-  0x777777
-);
+function showSettings(){
 
-createBox(
-  0,
-  3,
-  -32,
-  64,
-  6,
-  2,
-  0x777777
-);
+  alert(
+`【設定】
 
+現在はプロトタイプ版です。
 
-/* 建物 */
+・操作：WASD / iPadタッチ
+・カメラ：マウス / 画面スワイプ
+・M：メニュー
+・SPACE：ジャンプ
+・SHIFT：ダッシュ`
+  );
+}
 
-function createBuilding(
-  x,
-  z,
-  color
-){
+/* =========================================================
+   THREE.JS
+========================================================= */
 
-  createBox(
-    x,
-    3,
-    z,
-    10,
-    6,
-    8,
-    color
+let scene;
+let camera;
+let renderer;
+let controls;
+
+let playerObject;
+let monsters=[];
+
+let keys={};
+
+let joystick={
+  x:0,
+  y:0
+};
+
+function init3D(){
+
+  if(scene) return;
+
+  scene=new THREE.Scene();
+
+  scene.background=new THREE.Color(0x86b6e8);
+
+  scene.fog=new THREE.Fog(0x86b6e8,45,180);
+
+  camera=new THREE.PerspectiveCamera(
+    60,
+    innerWidth/innerHeight,
+    .1,
+    300
   );
 
-  const roof =
+  renderer=new THREE.WebGLRenderer({
+    antialias:true
+  });
+
+  renderer.setPixelRatio(
+    Math.min(devicePixelRatio,2)
+  );
+
+  renderer.setSize(
+    innerWidth,
+    innerHeight
+  );
+
+  document.getElementById("game")
+    .appendChild(renderer.domElement);
+
+  /* 光 */
+
+  const hemi=new THREE.HemisphereLight(
+    0xffffff,
+    0x506040,
+    1.8
+  );
+
+  scene.add(hemi);
+
+  const sun=new THREE.DirectionalLight(
+    0xffffff,
+    2
+  );
+
+  sun.position.set(30,50,20);
+
+  scene.add(sun);
+
+  /* 地面 */
+
+  const groundGeo=
+    new THREE.PlaneGeometry(240,240);
+
+  const groundMat=
+    new THREE.MeshStandardMaterial({
+      color:0x4e8749
+    });
+
+  const ground=
+    new THREE.Mesh(
+      groundGeo,
+      groundMat
+    );
+
+  ground.rotation.x=-Math.PI/2;
+
+  scene.add(ground);
+
+  /* 道 */
+
+  const roadMat=
+    new THREE.MeshStandardMaterial({
+      color:0x92795a
+    });
+
+  const road=
+    new THREE.Mesh(
+      new THREE.BoxGeometry(20,.08,240),
+      roadMat
+    );
+
+  road.position.y=.04;
+
+  scene.add(road);
+
+  const road2=
+    new THREE.Mesh(
+      new THREE.BoxGeometry(240,.08,20),
+      roadMat
+    );
+
+  road2.position.y=.045;
+
+  scene.add(road2);
+
+  /* 街 */
+
+  createTown();
+
+  /* 木 */
+
+  for(let i=0;i<70;i++){
+
+    const x=(Math.random()-.5)*200;
+    const z=(Math.random()-.5)*200;
+
+    if(Math.abs(x)<18 || Math.abs(z)<18)
+      continue;
+
+    createTree(x,z);
+  }
+
+  /* プレイヤー */
+
+  createPlayer();
+
+  /* モンスター */
+
+  createMonster("スライム",18,3,-15,30);
+  createMonster("ゴブリン",-15,3,-25,50);
+  createMonster("ウルフ",25,3,-35,70);
+  createMonster("スライム",-28,3,-40,30);
+
+  /* カメラ */
+
+  camera.position.set(
+    0,7,10
+  );
+
+  controls=new THREE.OrbitControls(
+    camera,
+    renderer.domElement
+  );
+
+  controls.enablePan=false;
+  controls.enableZoom=false;
+  controls.enableDamping=true;
+
+  controls.target.set(0,1,0);
+
+  setupControls();
+
+  animate();
+}
+
+/* =========================================================
+   街
+========================================================= */
+
+function createTown(){
+
+  createBuilding(
+    -8,3,-8,
+    8,6,8,
+    0x8b5a3c,
+    "宿屋"
+  );
+
+  createBuilding(
+    8,3,-8,
+    7,6,7,
+    0x6c7c99,
+    "道具屋"
+  );
+
+  createBuilding(
+    -8,3,8,
+    7,6,7,
+    0x9a753e,
+    "ギルド"
+  );
+
+  createBuilding(
+    8,3,8,
+    8,6,8,
+    0x77568c,
+    "教会"
+  );
+
+  /* 城門 */
+
+  const gate=
+    new THREE.Mesh(
+      new THREE.BoxGeometry(8,7,2),
+      new THREE.MeshStandardMaterial({
+        color:0x4b3829
+      })
+    );
+
+  gate.position.set(0,3.5,-20);
+
+  scene.add(gate);
+}
+
+function createBuilding(
+  x,y,z,
+  w,h,d,
+  color,
+  name
+){
+
+  const body=
+    new THREE.Mesh(
+      new THREE.BoxGeometry(w,h,d),
+      new THREE.MeshStandardMaterial({
+        color
+      })
+    );
+
+  body.position.set(x,y,z);
+
+  scene.add(body);
+
+  const roof=
     new THREE.Mesh(
       new THREE.ConeGeometry(
-        7,
+        Math.max(w,d)*.72,
         4,
         4
       ),
-      material(0x633b2a)
+      new THREE.MeshStandardMaterial({
+        color:0x49352c
+      })
     );
 
-  roof.position.set(
-    x,
-    8,
-    z
-  );
+  roof.position.set(x,y+h/2+2,z);
 
-  roof.rotation.y =
-    Math.PI / 4;
-
-  roof.castShadow = true;
+  roof.rotation.y=Math.PI/4;
 
   scene.add(roof);
 }
 
-createBuilding(
-  -17,
-  -12,
-  0x9a6848
-);
-
-createBuilding(
-  17,
-  -12,
-  0x5b6e9b
-);
-
-createBuilding(
-  0,
-  -20,
-  0x8c5c7c
-);
-
-createBuilding(
-  -17,
-  12,
-  0x7c7c62
-);
-
-createBuilding(
-  17,
-  12,
-  0x6d8d6d
-);
-
-
-/* 街の門 */
-
-createBox(
-  0,
-  3,
-  -31,
-  10,
-  6,
-  2,
-  0x8a6b45
-);
-
-
 /* =========================================================
-   TREES
+   木
 ========================================================= */
 
 function createTree(x,z){
 
-  createBox(
-    x,
-    2,
-    z,
-    1.2,
-    4,
-    1.2,
-    0x754b2c
-  );
-
-  const crown =
+  const trunk=
     new THREE.Mesh(
-      new THREE.ConeGeometry(
-        3.2,
-        7,
-        8
-      ),
-      material(0x236b35)
+      new THREE.CylinderGeometry(.35,.5,3,8),
+      new THREE.MeshStandardMaterial({
+        color:0x68452b
+      })
     );
 
-  crown.position.set(
-    x,
-    7,
-    z
-  );
+  trunk.position.set(x,1.5,z);
 
-  crown.castShadow = true;
+  scene.add(trunk);
 
-  scene.add(crown);
+  const leaves=
+    new THREE.Mesh(
+      new THREE.SphereGeometry(2.2,10,10),
+      new THREE.MeshStandardMaterial({
+        color:0x2f7438
+      })
+    );
+
+  leaves.position.set(x,4,z);
+
+  scene.add(leaves);
 }
 
-
-for(
-  let x=-90;
-  x<=90;
-  x+=15
-){
-
-  for(
-    let z=-90;
-    z<=90;
-    z+=18
-  ){
-
-    if(Math.random() < .55){
-
-      createTree(
-        x + Math.random()*7-3.5,
-        z + Math.random()*7-3.5
-      );
-
-    }
-
-  }
-
-}
-
-
 /* =========================================================
-   PLAYER
+   プレイヤー
 ========================================================= */
 
-const player =
-  new THREE.Group();
+function createPlayer(){
 
-player.position.set(
-  0,
-  0,
-  10
-);
-
-scene.add(player);
-
-
-/* BODY */
-
-const body =
-  new THREE.Mesh(
-    new THREE.CapsuleGeometry(
-      .65,
-      1.3,
-      6,
-      12
-    ),
-    material(0x315b9c)
-  );
-
-body.position.y =
-  1.25;
-
-body.castShadow = true;
-
-player.add(body);
-
-
-/* HEAD */
-
-const head =
-  new THREE.Mesh(
-    new THREE.SphereGeometry(
-      .52,
-      16,
-      16
-    ),
-    material(0x9b6b4c)
-  );
-
-head.position.y =
-  2.45;
-
-head.castShadow = true;
-
-player.add(head);
-
-
-/* SWORD */
-
-const sword =
-  new THREE.Mesh(
-    new THREE.BoxGeometry(
-      .12,
-      1.5,
-      .12
-    ),
-    new THREE.MeshStandardMaterial({
-      color:0xdde5ee,
-      metalness:.8
-    })
-  );
-
-sword.position.set(
-  .85,
-  1.35,
-  0
-);
-
-sword.rotation.z =
-  -.35;
-
-sword.castShadow = true;
-
-player.add(sword);
-
-
-/* =========================================================
-   MONSTERS
-========================================================= */
-
-const monsters = [];
-
-function createMonster(x,z){
-
-  const group =
+  playerObject=
     new THREE.Group();
 
-  group.position.set(
-    x,
-    0,
-    z
-  );
-
-  const body =
+  const body=
     new THREE.Mesh(
-      new THREE.SphereGeometry(
-        1.15,
-        16,
-        12
-      ),
-      material(0x4c9c65)
+      new THREE.CapsuleGeometry(.55,1.2,6,12),
+      new THREE.MeshStandardMaterial({
+        color:0x416fa8
+      })
     );
 
-  body.scale.y = .8;
+  body.position.y=1.1;
 
-  body.position.y =
-    1.05;
+  playerObject.add(body);
 
-  body.castShadow = true;
-
-  group.add(body);
-
-  /* 目 */
-
-  const eyeMaterial =
-    new THREE.MeshBasicMaterial({
-      color:0xffffff
-    });
-
-  for(
-    const xOffset of [-.38,.38]
-  ){
-
-    const eye =
-      new THREE.Mesh(
-        new THREE.SphereGeometry(
-          .16,
-          8,
-          8
-        ),
-        eyeMaterial
-      );
-
-    eye.position.set(
-      xOffset,
-      1.35,
-      .95
+  const head=
+    new THREE.Mesh(
+      new THREE.SphereGeometry(.55,16,16),
+      new THREE.MeshStandardMaterial({
+        color:0xf0c7a0
+      })
     );
 
-    group.add(eye);
+  head.position.y=2.25;
 
-  }
+  playerObject.add(head);
 
-  scene.add(group);
+  const sword=
+    new THREE.Mesh(
+      new THREE.BoxGeometry(.12,1.7,.12),
+      new THREE.MeshStandardMaterial({
+        color:0xd9e1e8,
+        metalness:.8
+      })
+    );
 
-  monsters.push({
-    object:group,
-    hp:35,
-    alive:true
-  });
+  sword.position.set(.8,1.4,0);
+
+  sword.rotation.z=-.5;
+
+  playerObject.add(sword);
+
+  scene.add(playerObject);
+
+  playerObject.position.set(
+    0,0,12
+  );
 }
 
-
-/* フィールドの敵 */
-
-createMonster(
-  10,
-  -42
-);
-
-createMonster(
-  -13,
-  -55
-);
-
-createMonster(
-  22,
-  -65
-);
-
-
 /* =========================================================
-   PLAYER DATA
+   モンスター
 ========================================================= */
 
-const state = {
+function createMonster(
+  name,x,y,z,hp
+){
 
-  level:1,
+  const mesh=
+    new THREE.Mesh(
+      new THREE.SphereGeometry(1.25,16,16),
+      new THREE.MeshStandardMaterial({
+        color:
+          name==="スライム"
+          ?0x35d98a
+          :name==="ゴブリン"
+          ?0x67a34e
+          :0x777b82
+      })
+    );
 
-  exp:0,
+  mesh.position.set(x,y,z);
 
-  sp:0,
+  mesh.userData={
+    name,
+    hp,
+    maxHP:hp
+  };
 
-  gold:100,
+  scene.add(mesh);
 
-  hp:55,
-  maxHp:55,
-
-  mp:20,
-  maxMp:20,
-
-  job:"二刀流見習い",
-
-  race:"オーク",
-
-  str:10,
-  def:7,
-  agi:9
-
-};
-
-
-/* =========================================================
-   JOB / SKILL TREES
-========================================================= */
-
-const jobs = {
-
-  "二刀流見習い":{
-
-    skillPointGain:2,
-
-    trees:[
-
-      {
-        name:"双剣技",
-
-        skills:[
-          "二連斬り",
-          "追撃",
-          "双剣強化",
-          "乱舞"
-        ]
-
-      },
-
-      {
-        name:"身軽さ",
-
-        skills:[
-          "身軽",
-          "回避上昇",
-          "疾走",
-          "幻影歩法"
-        ]
-
-      },
-
-      {
-        name:"戦術",
-
-        skills:[
-          "急所狙い",
-          "反撃",
-          "闘志",
-          "双刃奥義"
-        ]
-
-      }
-
-    ]
-
-  },
-
-
-  "見習い騎士":{
-
-    skillPointGain:1,
-
-    trees:[
-
-      {
-        name:"盾術",
-
-        skills:[
-          "盾防御",
-          "防御姿勢",
-          "守護",
-          "鉄壁"
-        ]
-
-      },
-
-      {
-        name:"剣技",
-
-        skills:[
-          "斬撃",
-          "強撃",
-          "連撃",
-          "騎士の一撃"
-        ]
-
-      },
-
-      {
-        name:"守護",
-
-        skills:[
-          "挑発",
-          "庇う",
-          "生命力",
-          "守護騎士"
-        ]
-
-      }
-
-    ]
-
-  },
-
-
-  "魔法見習い":{
-
-    skillPointGain:3,
-
-    trees:[
-
-      {
-        name:"火魔法",
-
-        skills:[
-          "火種",
-          "火球",
-          "火柱",
-          "爆炎"
-        ]
-
-      },
-
-      {
-        name:"水魔法",
-
-        skills:[
-          "水滴",
-          "水弾",
-          "氷槍",
-          "大海嘯"
-        ]
-
-      },
-
-      {
-        name:"魔力",
-
-        skills:[
-          "魔力増加",
-          "詠唱短縮",
-          "魔力回復",
-          "賢者の卵"
-        ]
-
-      }
-
-    ]
-
-  }
-
-};
-
-
-const learnedSkills =
-  new Set();
-
+  monsters.push(mesh);
+}
 
 /* =========================================================
    HUD
@@ -997,281 +1406,155 @@ const learnedSkills =
 
 function updateHUD(){
 
-  document.getElementById(
-    "level"
-  ).textContent =
-    state.level;
+  document.getElementById("playerName")
+    .textContent=player.name;
 
-  document.getElementById(
-    "exp"
-  ).textContent =
-    state.exp;
+  document.getElementById("playerInfo")
+    .textContent=
+    `${player.race} / ${player.job}`;
 
-  document.getElementById(
-    "sp"
-  ).textContent =
-    state.sp;
+  document.getElementById("hpBar")
+    .style.width=
+    `${player.hp/player.maxHP*100}%`;
 
-  document.getElementById(
-    "gold"
-  ).textContent =
-    state.gold;
+  document.getElementById("mpBar")
+    .style.width=
+    `${player.mp/player.maxMP*100}%`;
 
-  document.getElementById(
-    "hp"
-  ).textContent =
-    state.hp;
+  document.getElementById("expBar")
+    .style.width=
+    `${player.exp/player.expNext*100}%`;
 
-  document.getElementById(
-    "maxHp"
-  ).textContent =
-    state.maxHp;
-
-  document.getElementById(
-    "mp"
-  ).textContent =
-    state.mp;
-
-  document.getElementById(
-    "maxMp"
-  ).textContent =
-    state.maxMp;
-
-  document.getElementById(
-    "job"
-  ).textContent =
-    state.job;
-
-  document.getElementById(
-    "race"
-  ).textContent =
-    state.race;
-
-  document.getElementById(
-    "hpBar"
-  ).style.width =
-    (state.hp/state.maxHp*100)+"%";
-
-  document.getElementById(
-    "mpBar"
-  ).style.width =
-    (state.mp/state.maxMp*100)+"%";
+  document.getElementById("levelInfo")
+    .textContent=
+    `Lv.${player.level}　SP ${player.sp}　G ${player.gold}`;
 }
 
-
 /* =========================================================
-   MESSAGE
-========================================================= */
-
-let messageTimer;
-
-function showMessage(text){
-
-  const box =
-    document.getElementById(
-      "message"
-    );
-
-  box.textContent =
-    text;
-
-  box.style.display =
-    "block";
-
-  clearTimeout(
-    messageTimer
-  );
-
-  messageTimer =
-    setTimeout(
-      ()=>{
-        box.style.display =
-          "none";
-      },
-      1700
-    );
-
-}
-
-
-/* =========================================================
-   SKILL MENU
+   メニュー
 ========================================================= */
 
 function openMenu(){
 
-  const menu =
-    document.getElementById(
-      "menu"
-    );
+  document.getElementById("menu").style.display="block";
 
-  if(
-    menu.style.display === "block"
-  ){
-
-    menu.style.display =
-      "none";
-
-    return;
-
-  }
-
-
-  const job =
-    jobs[state.job];
-
-  let html = `
-
-    <h2>🎒 キャラクター</h2>
-
-    <p>
-      Lv.${state.level}
-     　
-      ${state.race}
-      /
-      ${state.job}
-    </p>
-
-    <p>
-      STR ${state.str}
-     　
-      DEF ${state.def}
-     　
-      AGI ${state.agi}
-    </p>
-
-    <p>
-      スキルポイント：
-      <b>${state.sp}</b>
-    </p>
-
-    <hr>
-
-    <h2>🌳 スキルツリー</h2>
-
-  `;
-
-
-  job.trees.forEach(
-    (tree,treeIndex)=>{
-
-      html +=
-        `<h3>${tree.name}</h3>`;
-
-      tree.skills.forEach(
-        (skill,index)=>{
-
-          const id =
-            treeIndex+"-"+index;
-
-          const cost =
-            5 + index*2;
-
-          const learned =
-            learnedSkills.has(id);
-
-          html += `
-
-            <div class="skill
-              ${learned ? "" : "locked"}">
-
-              ${learned ? "✅" : "🔒"}
-
-              ${skill}
-
-              <small>
-                (${cost}SP)
-              </small>
-
-              ${
-                !learned &&
-                state.sp >= cost
-
-                ?
-
-                `<button
-                  onclick="learnSkill('${id}','${skill}',${cost})">
-                  習得
-                </button>`
-
-                :
-
-                ""
-              }
-
-            </div>
-
-          `;
-
-        }
-      );
-
-    }
-  );
-
-
-  html += `
-
-    <hr>
-
-    <h3>⚔️ 装備</h3>
-
-    <p>
-      武器：初心者の双剣<br>
-      防具：布の服<br>
-      装飾：旅人のお守り
-    </p>
-
-    <button onclick="openMenu()">
-      閉じる
-    </button>
-
-  `;
-
-
-  menu.innerHTML =
-    html;
-
-  menu.style.display =
-    "block";
+  renderMenu();
 
 }
 
+function closeMenu(){
 
-/* =========================================================
-   LEARN SKILL
-========================================================= */
+  document.getElementById("menu").style.display="none";
 
-window.learnSkill =
-function(
-  id,
-  skill,
-  cost
-){
+}
 
-  if(
-    state.sp >= cost &&
-    !learnedSkills.has(id)
-  ){
+function renderMenu(){
 
-    state.sp -= cost;
+  document.getElementById("menuStatus").innerHTML=`
+    <b>${player.name}</b><br>
+    種族：${player.race}<br>
+    職業：${player.job}<br>
+    Lv.${player.level}<br>
+    SP：${player.sp}<br>
+    STR ${player.str}　
+    DEF ${player.def}<br>
+    INT ${player.int}　
+    MND ${player.mnd}<br>
+    AGI ${player.agi}
+  `;
 
-    learnedSkills.add(id);
+  const list=
+    document.getElementById("skillList");
 
-    updateHUD();
+  list.innerHTML="";
 
-    showMessage(
-      "✨ "+skill+"を習得！"
-    );
+  const type=
+    jobs.find(j=>j.name===player.job)?.type
+    ||"剣士";
 
-    openMenu();
+  const trees=
+    skillTrees[type] || skillTrees["剣士"];
 
-    openMenu();
+  trees.forEach((tree,index)=>{
 
+    const title=
+      document.createElement("h4");
+
+    title.textContent=
+      `スキルツリー ${index+1}`;
+
+    list.appendChild(title);
+
+    tree.forEach((skill,i)=>{
+
+      const key=
+        `${type}-${index}-${i}`;
+
+      const div=
+        document.createElement("div");
+
+      div.className=
+        "skill"+
+        (player.learned.includes(key)
+          ?" learned":"");
+
+      div.innerHTML=`
+        <b>${skill}</b><br>
+        <span class="small">
+          ${i===0
+            ?"基本スキル"
+            :"上位スキル"}
+        </span>
+      `;
+
+      if(!player.learned.includes(key)){
+
+        const btn=
+          document.createElement("button");
+
+        btn.textContent="5 SP";
+
+        btn.onclick=()=>{
+          learnSkill(key,skill);
+        };
+
+        div.appendChild(btn);
+
+      }else{
+
+        div.innerHTML+=
+          `<br><span style="color:#ffe16b">
+            習得済み
+          </span>`;
+      }
+
+      list.appendChild(div);
+
+    });
+
+  });
+}
+
+function learnSkill(key,name){
+
+  if(player.sp<5){
+
+    showMessage("SPが足りない！");
+
+    return;
   }
 
-};
+  player.sp-=5;
 
+  player.learned.push(key);
+
+  showMessage(
+    `${name}を習得した！`
+  );
+
+  updateHUD();
+  renderMenu();
+}
 
 /* =========================================================
    EXP / LEVEL
@@ -1279,777 +1562,741 @@ function(
 
 function gainExp(amount){
 
-  state.exp += amount;
+  player.exp+=amount;
 
+  while(player.exp>=player.expNext){
 
-  while(
-    state.exp >= 100
-  ){
+    player.exp-=player.expNext;
 
-    state.exp -= 100;
+    player.level++;
 
-    state.level++;
+    player.expNext=
+      Math.floor(player.expNext*1.25);
 
+    const job=
+      jobs.find(j=>j.name===player.job);
 
-    const gain =
-      jobs[state.job]
-        .skillPointGain;
+    const gain=
+      job ? job.sp : 2;
 
+    player.sp+=gain;
 
-    state.sp += gain;
+    player.maxHP+=10;
+    player.maxMP+=4;
 
-    state.maxHp += 7;
+    player.hp=player.maxHP;
+    player.mp=player.maxMP;
 
-    state.hp =
-      state.maxHp;
-
-    state.maxMp += 3;
-
-    state.mp =
-      state.maxMp;
-
-    state.str += 2;
-
-    state.def += 1;
-
-    state.agi += 1;
-
+    player.str+=2;
+    player.def+=2;
+    player.int+=2;
+    player.mnd+=2;
+    player.agi+=2;
 
     showMessage(
-      "🎉 レベルアップ！  +" +
-      gain +
-      " SP"
+      `レベルアップ！ Lv.${player.level} / SP +${gain}`
     );
+  }
+
+  updateHUD();
+}
+
+/* =========================================================
+   攻撃
+========================================================= */
+
+function attackNearest(){
+
+  if(!playerObject) return;
+
+  let target=null;
+  let dist=999;
+
+  monsters.forEach(m=>{
+
+    if(m.userData.hp<=0)
+      return;
+
+    const d=
+      playerObject.position.distanceTo(
+        m.position
+      );
+
+    if(d<dist){
+
+      dist=d;
+      target=m;
+
+    }
+
+  });
+
+  if(!target){
+
+    showMessage("近くに敵がいない。");
+    return;
+  }
+
+  if(dist>5){
+
+    showMessage("敵に近づいてください。");
+    return;
+  }
+
+  const damage=
+    Math.floor(
+      player.str*1.8
+    );
+
+  target.userData.hp-=damage;
+
+  showMessage(
+    `${target.userData.name}に${damage}ダメージ！`
+  );
+
+  if(target.userData.hp<=0){
+
+    showMessage(
+      `${target.userData.name}を倒した！`
+    );
+
+    gainExp(
+      target.userData.maxHP
+    );
+
+    player.gold+=
+      target.userData.maxHP;
+
+    target.visible=false;
 
   }
 
+  updateHUD();
+}
+
+/* =========================================================
+   ジャンプ・ダッシュ
+========================================================= */
+
+let jumpPower=0;
+
+function jump(){
+
+  if(playerObject){
+    jumpPower=0.22;
+  }
+}
+
+function dash(){
+
+  if(!playerObject)
+    return;
+
+  const dir=
+    new THREE.Vector3();
+
+  camera.getWorldDirection(dir);
+
+  dir.y=0;
+
+  dir.normalize();
+
+  playerObject.position.add(
+    dir.multiplyScalar(3)
+  );
+}
+
+/* =========================================================
+   メッセージ
+========================================================= */
+
+let messageTimer;
+
+function showMessage(text){
+
+  const box=
+    document.getElementById("message");
+
+  box.textContent=text;
+
+  clearTimeout(messageTimer);
+
+  messageTimer=
+    setTimeout(()=>{
+      box.textContent="";
+    },2500);
+}
+
+/* =========================================================
+   キーボード
+========================================================= */
+
+function setupControls(){
+
+  addEventListener("keydown",e=>{
+
+    keys[e.key.toLowerCase()]=true;
+
+    if(e.key===" "){
+      jump();
+    }
+
+    if(e.key.toLowerCase()==="e"){
+      attackNearest();
+    }
+
+    if(e.key.toLowerCase()==="m"){
+      openMenu();
+    }
+
+  });
+
+  addEventListener("keyup",e=>{
+    keys[e.key.toLowerCase()]=false;
+  });
+
+  /* iPadジョイスティック */
+
+  const joy=
+    document.getElementById("joystick");
+
+  const knob=
+    document.getElementById("knob");
+
+  let active=false;
+
+  joy.addEventListener("pointerdown",e=>{
+    active=true;
+    joy.setPointerCapture(e.pointerId);
+  });
+
+  joy.addEventListener("pointermove",e=>{
+
+    if(!active)return;
+
+    const rect=
+      joy.getBoundingClientRect();
+
+    let x=
+      e.clientX-
+      (rect.left+rect.width/2);
+
+    let y=
+      e.clientY-
+      (rect.top+rect.height/2);
+
+    const max=38;
+
+    const len=Math.hypot(x,y);
+
+    if(len>max){
+
+      x=x/len*max;
+      y=y/len*max;
+
+    }
+
+    knob.style.transform=
+      `translate(${x}px,${y}px)`;
+
+    joystick.x=x/max;
+    joystick.y=y/max;
+
+  });
+
+  const resetJoy=()=>{
+
+    active=false;
+
+    joystick.x=0;
+    joystick.y=0;
+
+    knob.style.transform=
+      "translate(0,0)";
+  };
+
+  joy.addEventListener(
+    "pointerup",
+    resetJoy
+  );
+
+  joy.addEventListener(
+    "pointercancel",
+    resetJoy
+  );
+
+  /* カメラスワイプ */
+
+  const area=
+    document.getElementById("cameraArea");
+
+  let lastX=0;
+  let lastY=0;
+  let cameraDrag=false;
+
+  area.addEventListener("pointerdown",e=>{
+
+    cameraDrag=true;
+    lastX=e.clientX;
+    lastY=e.clientY;
+
+  });
+
+  area.addEventListener("pointermove",e=>{
+
+    if(!cameraDrag)return;
+
+    const dx=e.clientX-lastX;
+    const dy=e.clientY-lastY;
+
+    lastX=e.clientX;
+    lastY=e.clientY;
+
+    if(controls){
+
+      controls.rotateLeft(dx*.005);
+      controls.rotateUp(dy*.005);
+
+    }
+
+  });
+
+  area.addEventListener(
+    "pointerup",
+    ()=>cameraDrag=false
+  );
+
+  area.addEventListener(
+    "pointercancel",
+    ()=>cameraDrag=false
+  );
+}
+
+/* =========================================================
+   移動
+========================================================= */
+
+function updateMovement(){
+
+  if(!playerObject)
+    return;
+
+  let x=0;
+  let z=0;
+
+  if(keys["w"]) z-=1;
+  if(keys["s"]) z+=1;
+  if(keys["a"]) x-=1;
+  if(keys["d"]) x+=1;
+
+  x+=joystick.x;
+  z+=joystick.y;
+
+  const length=
+    Math.hypot(x,z);
+
+  if(length>1){
+
+    x/=length;
+    z/=length;
+
+  }
+
+  const speed=
+    keys["shift"]
+      ? .22
+      : .11;
+
+  playerObject.position.x+=
+    x*speed;
+
+  playerObject.position.z+=
+    z*speed;
+
+  /* ジャンプ */
+
+  if(jumpPower>0){
+
+    playerObject.position.y+=
+      jumpPower;
+
+    jumpPower-=.012;
+
+  }
+
+  if(playerObject.position.y<0){
+
+    playerObject.position.y=0;
+    jumpPower=0;
+
+  }
+
+  /* カメラ追従 */
+
+  if(controls){
+
+    controls.target.lerp(
+      new THREE.Vector3(
+        playerObject.position.x,
+        1.5,
+        playerObject.position.z
+      ),
+      .12
+    );
+
+  }
+}
+
+/* =========================================================
+   戦闘
+========================================================= */
+
+let currentEnemy=null;
+
+function startBattle(enemy){
+
+  currentEnemy=enemy;
+
+  document.getElementById("battleUI")
+    .style.display="block";
+
+  document.getElementById("enemyName")
+    .textContent=enemy.userData.name;
+
+  updateBattle();
+
+  document.getElementById("battleLog")
+    .innerHTML=
+    `<div>${enemy.userData.name}が現れた！</div>`;
+}
+
+function updateBattle(){
+
+  if(!currentEnemy)return;
+
+  const hp=
+    Math.max(
+      0,
+      currentEnemy.userData.hp
+    );
+
+  const max=
+    currentEnemy.userData.maxHP;
+
+  document.getElementById("enemyHP")
+    .style.width=
+    `${hp/max*100}%`;
+
+  document.getElementById("enemyStatus")
+    .textContent=
+    `HP ${hp} / ${max}`;
+}
+
+function battleLog(text){
+
+  const log=
+    document.getElementById("battleLog");
+
+  log.innerHTML+=
+    `<div>${text}</div>`;
+
+  log.scrollTop=log.scrollHeight;
+}
+
+function battleAttack(){
+
+  if(!currentEnemy)return;
+
+  const damage=
+    Math.floor(player.str*1.5);
+
+  currentEnemy.userData.hp-=damage;
+
+  battleLog(
+    `${player.name}の攻撃！ ${damage}ダメージ！`
+  );
+
+  updateBattle();
+
+  if(currentEnemy.userData.hp<=0){
+
+    battleLog(
+      `${currentEnemy.userData.name}を倒した！`
+    );
+
+    gainExp(
+      currentEnemy.userData.maxHP
+    );
+
+    player.gold+=
+      currentEnemy.userData.maxHP;
+
+    currentEnemy.visible=false;
+
+    setTimeout(endBattle,600);
+
+  }else{
+
+    enemyAttackTurn();
+
+  }
+}
+
+function battleSkill(){
+
+  if(player.sp<5){
+
+    battleLog("SPが足りない！");
+    return;
+  }
+
+  player.sp-=5;
+
+  const damage=
+    Math.floor(
+      player.int*2.5+
+      player.str
+    );
+
+  currentEnemy.userData.hp-=damage;
+
+  battleLog(
+    `スキル発動！ ${damage}ダメージ！`
+  );
+
+  updateBattle();
+  updateHUD();
+
+  if(currentEnemy.userData.hp<=0){
+
+    battleLog("敵を倒した！");
+
+    gainExp(
+      currentEnemy.userData.maxHP*2
+    );
+
+    player.gold+=
+      currentEnemy.userData.maxHP*2;
+
+    currentEnemy.visible=false;
+
+    setTimeout(endBattle,600);
+
+  }else{
+
+    enemyAttackTurn();
+
+  }
+}
+
+function battleGuard(){
+
+  battleLog(
+    `${player.name}は身を守っている！`
+  );
+
+  enemyAttackTurn(true);
+}
+
+function battleEscape(){
+
+  if(Math.random()<.7){
+
+    battleLog("うまく逃げ切った！");
+
+    setTimeout(endBattle,500);
+
+  }else{
+
+    battleLog("逃げられない！");
+    enemyAttackTurn();
+
+  }
+}
+
+function enemyAttackTurn(guard=false){
+
+  let damage=
+    Math.max(
+      1,
+      Math.floor(
+        currentEnemy.userData.maxHP*.18
+      )
+    );
+
+  if(guard)
+    damage=Math.floor(damage*.5);
+
+  player.hp=
+    Math.max(
+      0,
+      player.hp-damage
+    );
+
+  battleLog(
+    `${currentEnemy.userData.name}の攻撃！ ${damage}ダメージ！`
+  );
 
   updateHUD();
 
+  if(player.hp<=0){
+
+    battleLog("力尽きた……");
+
+    setTimeout(()=>{
+      player.hp=player.maxHP;
+      endBattle();
+      showMessage("街に戻された。");
+      playerObject.position.set(0,0,12);
+    },1000);
+  }
 }
 
+function endBattle(){
+
+  document.getElementById("battleUI")
+    .style.display="none";
+
+  currentEnemy=null;
+
+  updateHUD();
+}
 
 /* =========================================================
-   ATTACK
+   自動エンカウント
 ========================================================= */
 
-function attack(){
+let encounterTimer=0;
 
-  let target =
-    null;
+function checkEncounter(delta){
 
-  let closest =
-    Infinity;
+  encounterTimer+=delta;
 
+  if(encounterTimer<5)
+    return;
 
-  for(
-    const monster of monsters
-  ){
+  encounterTimer=0;
 
-    if(
-      !monster.alive
-    )
-      continue;
+  if(!playerObject)
+    return;
 
-
-    const distance =
-      player.position.distanceTo(
-        monster.object.position
-      );
-
-
-    if(
-      distance < closest
-    ){
-
-      closest =
-        distance;
-
-      target =
-        monster;
-
-    }
-
-  }
-
+  /* 街の外 */
 
   if(
-    target &&
-    closest < 4
+    Math.abs(playerObject.position.x)>15 ||
+    playerObject.position.z<-18
   ){
 
-    target.hp -= 18;
+    if(Math.random()<.05){
 
-    showMessage(
-      "⚔️ 攻撃！"
-    );
+      const alive=
+        monsters.filter(
+          m=>m.visible
+        );
 
+      if(alive.length){
 
-    if(
-      target.hp <= 0
-    ){
+        const enemy=
+          alive[
+            Math.floor(
+              Math.random()*alive.length
+            )
+          ];
 
-      target.alive =
-        false;
+        const dist=
+          playerObject.position
+            .distanceTo(enemy.position);
 
-      scene.remove(
-        target.object
-      );
+        if(dist<12){
 
-      state.gold += 20;
+          startBattle(enemy);
 
-      gainExp(35);
-
-      showMessage(
-        "✨ モンスター撃破！ +35EXP"
-      );
-
-    }
-
-  }
-
-}
-
-
-/* =========================================================
-   KEYBOARD
-========================================================= */
-
-const keys = {};
-
-let velocityY = 0;
-
-let grounded = true;
-
-
-window.addEventListener(
-  "keydown",
-  event=>{
-
-    keys[event.code] =
-      true;
-
-
-    if(
-      event.code === "Space" &&
-      grounded
-    ){
-
-      velocityY =
-        8;
-
-      grounded =
-        false;
-
-    }
-
-
-    if(
-      event.code === "KeyE"
-    ){
-
-      attack();
-
-    }
-
-
-    if(
-      event.code === "KeyM"
-    ){
-
-      openMenu();
-
-    }
-
-  }
-);
-
-
-window.addEventListener(
-  "keyup",
-  event=>{
-
-    keys[event.code] =
-      false;
-
-  }
-);
-
-
-/* =========================================================
-   TOUCH JOYSTICK
-========================================================= */
-
-const joystick =
-  document.getElementById(
-    "joystick"
-  );
-
-const knob =
-  document.getElementById(
-    "knob"
-  );
-
-const touchMovement = {
-  x:0,
-  z:0
-};
-
-let joystickPointer =
-  null;
-
-
-function updateJoystick(
-  x,
-  y
-){
-
-  const rect =
-    joystick.getBoundingClientRect();
-
-  const centerX =
-    rect.left +
-    rect.width/2;
-
-  const centerY =
-    rect.top +
-    rect.height/2;
-
-  let dx =
-    x-centerX;
-
-  let dy =
-    y-centerY;
-
-  const max =
-    45;
-
-  const length =
-    Math.hypot(dx,dy);
-
-
-  if(
-    length > max
-  ){
-
-    dx =
-      dx/length*max;
-
-    dy =
-      dy/length*max;
-
-  }
-
-
-  knob.style.transform =
-    `translate(${dx}px,${dy}px)`;
-
-
-  touchMovement.x =
-    dx/max;
-
-  touchMovement.z =
-    dy/max;
-
-}
-
-
-joystick.addEventListener(
-  "pointerdown",
-  event=>{
-
-    joystickPointer =
-      event.pointerId;
-
-    joystick.setPointerCapture(
-      event.pointerId
-    );
-
-    updateJoystick(
-      event.clientX,
-      event.clientY
-    );
-
-  }
-);
-
-
-joystick.addEventListener(
-  "pointermove",
-  event=>{
-
-    if(
-      event.pointerId !==
-      joystickPointer
-    )
-      return;
-
-    updateJoystick(
-      event.clientX,
-      event.clientY
-    );
-
-  }
-);
-
-
-function resetJoystick(){
-
-  joystickPointer =
-    null;
-
-  knob.style.transform =
-    "translate(0,0)";
-
-  touchMovement.x =
-    0;
-
-  touchMovement.z =
-    0;
-
-}
-
-
-joystick.addEventListener(
-  "pointerup",
-  resetJoystick
-);
-
-joystick.addEventListener(
-  "pointercancel",
-  resetJoystick
-);
-
-
-/* =========================================================
-   TOUCH CAMERA
-========================================================= */
-
-const cameraArea =
-  document.getElementById(
-    "cameraArea"
-  );
-
-let cameraPointer =
-  null;
-
-let previousCameraX =
-  0;
-
-let previousCameraY =
-  0;
-
-
-cameraArea.addEventListener(
-  "pointerdown",
-  event=>{
-
-    cameraPointer =
-      event.pointerId;
-
-    previousCameraX =
-      event.clientX;
-
-    previousCameraY =
-      event.clientY;
-
-    cameraArea.setPointerCapture(
-      event.pointerId
-    );
-
-  }
-);
-
-
-cameraArea.addEventListener(
-  "pointermove",
-  event=>{
-
-    if(
-      event.pointerId !==
-      cameraPointer
-    )
-      return;
-
-
-    const dx =
-      event.clientX -
-      previousCameraX;
-
-    const dy =
-      event.clientY -
-      previousCameraY;
-
-
-    previousCameraX =
-      event.clientX;
-
-    previousCameraY =
-      event.clientY;
-
-
-    player.rotation.y -=
-      dx * .008;
-
-
-    camera.position.x +=
-      dx * .025;
-
-    camera.position.y -=
-      dy * .015;
-
-  }
-);
-
-
-cameraArea.addEventListener(
-  "pointerup",
-  ()=>{
-    cameraPointer =
-      null;
-  }
-);
-
-
-/* =========================================================
-   TOUCH BUTTONS
-========================================================= */
-
-function touchButton(
-  id,
-  callback
-){
-
-  document
-    .getElementById(id)
-    .addEventListener(
-      "pointerdown",
-      event=>{
-
-        event.preventDefault();
-
-        callback();
+        }
 
       }
-    );
-
-}
-
-
-touchButton(
-  "attackButton",
-  attack
-);
-
-
-touchButton(
-  "jumpButton",
-  ()=>{
-
-    if(grounded){
-
-      velocityY =
-        8;
-
-      grounded =
-        false;
 
     }
 
   }
-);
-
-
-touchButton(
-  "dashButton",
-  ()=>{
-
-    keys.ShiftLeft =
-      true;
-
-    setTimeout(
-      ()=>{
-        keys.ShiftLeft =
-          false;
-      },
-      500
-    );
-
-  }
-);
-
-
-touchButton(
-  "skillButton",
-  openMenu
-);
-
-
-touchButton(
-  "menuButton",
-  openMenu
-);
-
-
-/* =========================================================
-   PLAYER MOVEMENT
-========================================================= */
-
-function updateMovement(
-  delta
-){
-
-  const direction =
-    new THREE.Vector3();
-
-
-  if(keys.KeyW)
-    direction.z -= 1;
-
-  if(keys.KeyS)
-    direction.z += 1;
-
-  if(keys.KeyA)
-    direction.x -= 1;
-
-  if(keys.KeyD)
-    direction.x += 1;
-
-
-  direction.x +=
-    touchMovement.x;
-
-  direction.z +=
-    touchMovement.z;
-
-
-  if(
-    direction.length() > 0
-  ){
-
-    direction.normalize();
-
-
-    const speed =
-      (
-        keys.ShiftLeft ||
-        keys.ShiftRight
-      )
-
-      ?
-
-      9
-
-      :
-
-      5;
-
-
-    player.position.x +=
-      direction.x *
-      speed *
-      delta;
-
-
-    player.position.z +=
-      direction.z *
-      speed *
-      delta;
-
-
-    player.rotation.y =
-      Math.atan2(
-        direction.x,
-        direction.z
-      );
-
-  }
-
-
-  /* 重力 */
-
-  velocityY -=
-    20 * delta;
-
-
-  player.position.y +=
-    velocityY * delta;
-
-
-  if(
-    player.position.y <= 0
-  ){
-
-    player.position.y =
-      0;
-
-    velocityY =
-      0;
-
-    grounded =
-      true;
-
-  }
-
-
-  /* ワールド境界 */
-
-  player.position.x =
-    Math.max(
-      -105,
-      Math.min(
-        105,
-        player.position.x
-      )
-    );
-
-  player.position.z =
-    Math.max(
-      -105,
-      Math.min(
-        105,
-        player.position.z
-      )
-    );
-
 }
 
-
 /* =========================================================
-   THIRD PERSON CAMERA
+   メインループ
 ========================================================= */
 
-const controls =
-  new THREE.OrbitControls(
-    camera,
-    renderer.domElement
-  );
+let lastTime=performance.now();
 
-controls.enablePan =
-  false;
+function animate(){
 
-controls.enableDamping =
-  true;
+  requestAnimationFrame(animate);
 
-controls.dampingFactor =
-  .08;
+  const now=performance.now();
 
-controls.minDistance =
-  4;
+  const delta=
+    (now-lastTime)/1000;
 
-controls.maxDistance =
-  12;
+  lastTime=now;
 
+  updateMovement();
 
-/* =========================================================
-   GAME LOOP
-========================================================= */
+  checkEncounter(delta);
 
-let previousTime =
-  performance.now();
+  /* モンスターをプレイヤー方向へ */
 
+  monsters.forEach(m=>{
 
-function gameLoop(
-  currentTime
-){
+    if(!m.visible)return;
 
-  const delta =
-    Math.min(
-      (currentTime -
-       previousTime)
-      / 1000,
-      .05
-    );
+    const dist=
+      m.position.distanceTo(
+        playerObject.position
+      );
 
-  previousTime =
-    currentTime;
+    if(dist<12 && dist>3){
 
+      const dir=
+        new THREE.Vector3()
+          .subVectors(
+            playerObject.position,
+            m.position
+          )
+          .normalize();
 
-  updateMovement(
-    delta
-  );
+      m.position.x+=dir.x*.01;
+      m.position.z+=dir.z*.01;
 
+    }
 
-  /* 三人称カメラ */
-
-  const p =
-    player.position;
-
-
-  const desiredCamera =
-    new THREE.Vector3(
-      p.x,
-      p.y + 4,
-      p.z + 7
-    );
-
-
-  camera.position.lerp(
-    desiredCamera,
-    .12
-  );
-
-
-  const target =
-    new THREE.Vector3(
-      p.x,
-      p.y + 1.2,
-      p.z
-    );
-
-
-  controls.target.lerp(
-    target,
-    .15
-  );
-
+  });
 
   controls.update();
-
 
   renderer.render(
     scene,
     camera
   );
-
-
-  requestAnimationFrame(
-    gameLoop
-  );
-
 }
 
-
 /* =========================================================
-   RESIZE
+   リサイズ
 ========================================================= */
 
-window.addEventListener(
-  "resize",
-  ()=>{
+addEventListener("resize",()=>{
 
-    camera.aspect =
-      innerWidth /
-      innerHeight;
+  if(!camera || !renderer)
+    return;
 
-    camera.updateProjectionMatrix();
+  camera.aspect=
+    innerWidth/innerHeight;
 
-    renderer.setSize(
-      innerWidth,
-      innerHeight
-    );
+  camera.updateProjectionMatrix();
 
-  }
-);
+  renderer.setSize(
+    innerWidth,
+    innerHeight
+  );
 
-
-/* START */
-
-updateHUD();
-
-requestAnimationFrame(
-  gameLoop
-);
+});
 
 </script>
 
