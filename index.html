@@ -1,17 +1,459 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>異世界オンライン</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>異世界オンライン</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+    color: white;
+    background: #080b14;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 背景 */
+.game {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    background:
+        radial-gradient(circle at 50% 25%, rgba(80,120,200,0.35), transparent 30%),
+        linear-gradient(
+            to bottom,
+            #101a35 0%,
+            #080d1d 50%,
+            #03050b 100%
+        );
+}
+
+/* 星 */
+.game::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background-image:
+        radial-gradient(circle, white 1px, transparent 1px),
+        radial-gradient(circle, rgba(255,255,255,0.7) 1px, transparent 1px);
+
+    background-size: 90px 90px, 150px 150px;
+    background-position: 10px 20px, 50px 70px;
+
+    opacity: 0.45;
+}
+
+/* 月 */
+.moon {
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+
+    right: 8%;
+    top: 8%;
+
+    background:
+        radial-gradient(circle at 35% 30%, #ffffff, #b8c8e5 65%, #7385a8);
+
+    box-shadow:
+        0 0 30px rgba(180,210,255,0.5),
+        0 0 100px rgba(100,150,255,0.2);
+}
+
+/* タイトル画面 */
+.title-screen {
+    position: relative;
+    z-index: 2;
+
+    width: min(900px, 92%);
+    text-align: center;
+
+    padding: 50px 30px;
+}
+
+/* 小さい文字 */
+.subtitle {
+    font-size: 18px;
+    letter-spacing: 8px;
+    color: #b9c9e8;
+    margin-bottom: 15px;
+}
+
+/* タイトル */
+h1 {
+    margin: 0;
+
+    font-size: clamp(45px, 9vw, 100px);
+    letter-spacing: 8px;
+
+    color: #ffffff;
+
+    text-shadow:
+        0 0 10px #7599ff,
+        0 0 30px #4268d8,
+        0 4px 10px #000;
+
+    animation: titleGlow 3s infinite alternate;
+}
+
+@keyframes titleGlow {
+    from {
+        text-shadow:
+            0 0 10px #7599ff,
+            0 0 25px #4268d8,
+            0 4px 10px #000;
+    }
+
+    to {
+        text-shadow:
+            0 0 20px #ffffff,
+            0 0 50px #537cff,
+            0 4px 10px #000;
+    }
+}
+
+.description {
+    margin-top: 18px;
+    margin-bottom: 45px;
+
+    color: #bfc8db;
+    font-size: 16px;
+    letter-spacing: 4px;
+}
+
+/* ボタン */
+.menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+}
+
+.menu button {
+    width: min(360px, 85%);
+    padding: 16px 25px;
+
+    border: 1px solid rgba(180,210,255,0.5);
+    border-radius: 6px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(40,60,110,0.8),
+            rgba(20,30,65,0.9)
+        );
+
+    color: white;
+
+    font-family: inherit;
+    font-size: 18px;
+    letter-spacing: 5px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 5px 20px rgba(0,0,0,0.4),
+        inset 0 0 15px rgba(100,140,255,0.08);
+
+    transition: 0.25s;
+}
+
+.menu button:hover {
+    transform: scale(1.05);
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(70,100,180,0.95),
+            rgba(35,55,110,0.95)
+        );
+
+    border-color: #bcd0ff;
+
+    box-shadow:
+        0 0 20px rgba(100,150,255,0.45);
+}
+
+.menu .start {
+    margin-bottom: 8px;
+
+    font-size: 23px;
+    padding: 20px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(60,90,180,0.95),
+            rgba(30,50,120,0.95)
+        );
+
+    border-color: #a9c2ff;
+
+    box-shadow:
+        0 0 25px rgba(70,110,255,0.35);
+}
+
+/* 下のコピーライト */
+.footer {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+
+    text-align: center;
+
+    color: #68728a;
+    font-family: sans-serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+/* ポップアップ */
+.panel {
+    position: fixed;
+    z-index: 10;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: min(700px, 90%);
+
+    padding: 35px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(18,27,55,0.98),
+            rgba(7,11,25,0.98)
+        );
+
+    border: 1px solid #718bc5;
+    border-radius: 10px;
+
+    box-shadow:
+        0 0 50px rgba(0,0,0,0.8),
+        0 0 25px rgba(80,120,255,0.2);
+
+    text-align: center;
+}
+
+.panel h2 {
+    margin-top: 0;
+    font-size: 30px;
+}
+
+.panel p {
+    color: #bdc7db;
+    line-height: 1.8;
+}
+
+.panel button {
+    margin-top: 20px;
+    padding: 12px 30px;
+
+    background: #253b78;
+    border: 1px solid #9eb5f0;
+    border-radius: 5px;
+
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+/* スマホ */
+@media (max-width: 600px) {
+
+    .moon {
+        width: 100px;
+        height: 100px;
+        right: 6%;
+        top: 5%;
+    }
+
+    .title-screen {
+        padding: 30px 15px;
+    }
+
+    .subtitle {
+        font-size: 12px;
+        letter-spacing: 4px;
+    }
+
+    h1 {
+        letter-spacing: 3px;
+    }
+
+    .description {
+        font-size: 12px;
+        letter-spacing: 2px;
+    }
+
+    .menu button {
+        font-size: 15px;
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <h1>異世界オンライン</h1>
-    <p>ようこそ、異世界へ。</p>
+<div class="game">
 
-    <button>GAME START</button>
+    <div class="moon"></div>
+
+    <main class="title-screen">
+
+        <div class="subtitle">
+            THE WORLD OF ANOTHER DIMENSION
+        </div>
+
+        <h1>異世界オンライン</h1>
+
+        <div class="description">
+            ―― 無限に広がる異世界へ ――
+        </div>
+
+        <div class="menu">
+
+            <button class="start" onclick="startGame()">
+                ⚔ GAME START ⚔
+            </button>
+
+            <button onclick="showCharacter()">
+                CHARACTER
+            </button>
+
+            <button onclick="showWorld()">
+                WORLD
+            </button>
+
+            <button onclick="showOptions()">
+                OPTIONS
+            </button>
+
+        </div>
+
+    </main>
+
+    <div class="footer">
+        ISEKAI ONLINE
+    </div>
+
+</div>
+
+
+<!-- GAME START画面 -->
+
+<div id="characterPanel" class="panel hidden">
+
+    <h2>キャラクター作成</h2>
+
+    <p>
+        ここからあなたの冒険が始まる。<br>
+        種族・職業・能力を選び、異世界へ旅立とう。
+    </p>
+
+    <button onclick="closePanel()">
+        まだ作成しない
+    </button>
+
+</div>
+
+
+<!-- WORLD画面 -->
+
+<div id="worldPanel" class="panel hidden">
+
+    <h2>異世界</h2>
+
+    <p>
+        王都、巨大森林、砂漠、海、魔族領、天空世界、<br>
+        地下世界――。
+        <br><br>
+        世界はこれからさらに広がっていく。
+    </p>
+
+    <button onclick="closePanel()">
+        戻る
+    </button>
+
+</div>
+
+
+<!-- OPTIONS画面 -->
+
+<div id="optionsPanel" class="panel hidden">
+
+    <h2>OPTIONS</h2>
+
+    <p>
+        異世界オンライン<br>
+        Version 0.1
+    </p>
+
+    <button onclick="closePanel()">
+        戻る
+    </button>
+
+</div>
+
+
+<script>
+
+function hideAllPanels() {
+    document.getElementById("characterPanel").classList.add("hidden");
+    document.getElementById("worldPanel").classList.add("hidden");
+    document.getElementById("optionsPanel").classList.add("hidden");
+}
+
+function showCharacter() {
+    hideAllPanels();
+    document.getElementById("characterPanel").classList.remove("hidden");
+}
+
+function showWorld() {
+    hideAllPanels();
+    document.getElementById("worldPanel").classList.remove("hidden");
+}
+
+function showOptions() {
+    hideAllPanels();
+    document.getElementById("optionsPanel").classList.remove("hidden");
+}
+
+function closePanel() {
+    hideAllPanels();
+}
+
+function startGame() {
+    showCharacter();
+}
+
+</script>
 
 </body>
 </html>
