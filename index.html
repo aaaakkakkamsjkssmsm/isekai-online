@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>異世界オンライン</title>
 
 <style>
@@ -11,35 +11,37 @@
 body{
     margin:0;
     min-height:100vh;
+    color:#fff;
     font-family:"Yu Mincho","Hiragino Mincho ProN",serif;
-    color:white;
     background:
-        radial-gradient(circle at 50% 20%,#263d72 0%,transparent 35%),
+        radial-gradient(circle at 50% 20%,#304d88 0%,transparent 35%),
         linear-gradient(#080d20,#02040b);
 }
 
-button,select,input{font:inherit}
+button,input,select{font:inherit}
 
 .screen{
     min-height:100vh;
-    padding:30px 15px;
+    padding:25px 15px;
     display:flex;
     justify-content:center;
     align-items:center;
 }
 
 .box{
-    width:min(900px,100%);
-    padding:35px;
-    background:rgba(7,13,30,.94);
+    width:min(950px,100%);
+    padding:30px;
+    background:rgba(7,13,30,.96);
     border:1px solid #718bc5;
     border-radius:15px;
     box-shadow:0 0 50px rgba(50,100,255,.18);
 }
 
+.hidden{display:none!important}
+
 h1{
     text-align:center;
-    font-size:clamp(42px,8vw,80px);
+    font-size:clamp(40px,8vw,80px);
     margin:0 0 10px;
     text-shadow:0 0 25px #527cff;
 }
@@ -49,28 +51,17 @@ h2{
     font-size:32px;
 }
 
-.subtitle{
-    text-align:center;
-    color:#aebddd;
-    letter-spacing:4px;
-    margin-bottom:35px;
-}
-
-.menu{
-    display:flex;
-    flex-direction:column;
-    gap:15px;
-    align-items:center;
+h3{
+    margin-top:25px;
 }
 
 button{
     cursor:pointer;
-    color:white;
+    color:#fff;
     background:linear-gradient(90deg,#263e82,#152657);
     border:1px solid #8ca9ed;
-    border-radius:7px;
-    padding:15px 25px;
-    width:min(400px,100%);
+    border-radius:8px;
+    padding:14px 22px;
     transition:.2s;
 }
 
@@ -79,35 +70,57 @@ button:hover{
     box-shadow:0 0 20px #466ed0;
 }
 
-.start{
-    font-size:22px;
-    padding:20px;
+.bigButton{
+    width:min(450px,100%);
+    font-size:21px;
+    padding:19px;
+}
+
+.menu{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:14px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#b7c5e5;
+    letter-spacing:4px;
+    margin-bottom:35px;
 }
 
 .form-row{
-    margin:20px 0;
+    margin:18px 0;
 }
 
 label{
     display:block;
-    margin-bottom:8px;
+    margin-bottom:7px;
     color:#cbd7f3;
 }
 
 input,select{
     width:100%;
     padding:13px;
-    color:white;
+    color:#fff;
     background:#101a35;
     border:1px solid #637fbf;
     border-radius:6px;
+}
+
+.info{
+    margin-top:15px;
+    padding:15px;
+    background:rgba(40,60,110,.25);
+    border-radius:8px;
+    line-height:1.8;
 }
 
 .stats{
     display:grid;
     grid-template-columns:repeat(2,1fr);
     gap:10px;
-    margin-top:20px;
 }
 
 .stat{
@@ -119,50 +132,260 @@ input,select{
     justify-content:space-between;
 }
 
-.info{
-    margin-top:20px;
-    padding:18px;
-    background:rgba(40,60,110,.25);
-    border-radius:8px;
-    line-height:1.8;
-}
-
 .actions{
     display:flex;
     gap:12px;
     flex-wrap:wrap;
     justify-content:center;
-    margin-top:30px;
+    margin-top:25px;
 }
 
 .actions button{
-    width:auto;
-}
-
-.hidden{display:none}
-
-.complete{
-    text-align:center;
+    min-width:160px;
 }
 
 .character-card{
-    padding:25px;
+    padding:22px;
     margin:20px 0;
     border:1px solid #728bc4;
     background:rgba(20,32,65,.7);
     border-radius:10px;
 }
 
-@media(max-width:600px){
-    .box{padding:22px 15px}
+/* ===== 街 ===== */
+
+.game{
+    width:min(1100px,100%);
+    min-height:90vh;
+    background:rgba(5,10,24,.97);
+    border:1px solid #637fbf;
+    border-radius:15px;
+    overflow:hidden;
+}
+
+.topbar{
+    padding:15px 20px;
+    background:#0c1530;
+    border-bottom:1px solid #394d7c;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.playerInfo{
+    display:flex;
+    gap:15px;
+    align-items:center;
+    flex-wrap:wrap;
+}
+
+.playerName{
+    font-size:20px;
+    font-weight:bold;
+}
+
+.level{
+    color:#b9c9ed;
+}
+
+.hpBar{
+    width:180px;
+    height:16px;
+    background:#171b29;
+    border:1px solid #63708e;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.hpFill{
+    height:100%;
+    width:100%;
+    background:linear-gradient(90deg,#39b86c,#9be15d);
+    transition:.3s;
+}
+
+.mainWorld{
+    padding:25px;
+}
+
+.location{
+    text-align:center;
+    font-size:32px;
+    margin-bottom:10px;
+}
+
+.locationDescription{
+    text-align:center;
+    color:#aebddd;
+    margin-bottom:25px;
+}
+
+.cityScene{
+    min-height:300px;
+    padding:30px 15px;
+    border-radius:12px;
+    background:
+        linear-gradient(rgba(20,35,65,.25),rgba(3,8,20,.85)),
+        radial-gradient(circle at 50% 20%,#526b92,#162342 45%,#080d19 80%);
+    border:1px solid #4c6596;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+.castle{
+    font-size:90px;
+    margin-bottom:10px;
+}
+
+.cityGrid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-top:20px;
+}
+
+.placeButton{
+    min-height:95px;
+    font-size:18px;
+}
+
+.placeIcon{
+    display:block;
+    font-size:32px;
+    margin-bottom:5px;
+}
+
+.log{
+    margin-top:20px;
+    padding:15px;
+    min-height:70px;
+    background:#080e20;
+    border:1px solid #26375e;
+    border-radius:8px;
+    color:#bfcbea;
+}
+
+.gold{
+    color:#ffd86b;
+}
+
+/* ===== フィールド ===== */
+
+.fieldScene{
+    min-height:420px;
+    border-radius:12px;
+    border:1px solid #4f6e56;
+    background:
+        radial-gradient(circle at 30% 25%,#7eae6c 0 8%,transparent 9%),
+        radial-gradient(circle at 75% 40%,#638f58 0 7%,transparent 8%),
+        radial-gradient(circle at 50% 75%,#50774d 0 12%,transparent 13%),
+        linear-gradient(#4b7091 0 32%,#71985f 33% 100%);
+    position:relative;
+    overflow:hidden;
+}
+
+.fieldTitle{
+    text-align:center;
+    padding-top:25px;
+    font-size:30px;
+    text-shadow:0 2px 5px #000;
+}
+
+.playerToken{
+    position:absolute;
+    left:50%;
+    top:55%;
+    transform:translate(-50%,-50%);
+    font-size:55px;
+}
+
+.monster{
+    position:absolute;
+    cursor:pointer;
+    font-size:55px;
+    transition:.2s;
+    filter:drop-shadow(0 3px 3px #222);
+}
+
+.monster:hover{
+    transform:scale(1.15);
+}
+
+.m1{left:18%;top:48%}
+.m2{right:18%;top:58%}
+.m3{left:65%;top:25%}
+
+.fieldButtons{
+    display:flex;
+    gap:12px;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin-top:20px;
+}
+
+/* ===== モーダル ===== */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.72);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    z-index:10;
+}
+
+.modalBox{
+    width:min(600px,100%);
+    background:#0b1329;
+    border:1px solid #718bc5;
+    border-radius:12px;
+    padding:25px;
+    box-shadow:0 0 40px #000;
+}
+
+.itemList{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin:20px 0;
+}
+
+.item{
+    padding:15px;
+    background:#111d39;
+    border:1px solid #344b79;
+    border-radius:7px;
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    align-items:center;
+}
+
+@media(max-width:650px){
+    .box{padding:20px 14px}
+    .cityGrid{grid-template-columns:repeat(2,1fr)}
     .stats{grid-template-columns:1fr}
+    .hpBar{width:120px}
+}
+
+@media(max-width:430px){
+    .cityGrid{grid-template-columns:1fr}
 }
 </style>
 </head>
 
 <body>
 
-<!-- タイトル -->
+<!-- =========================
+     タイトル
+========================= -->
 
 <div id="titleScreen" class="screen">
 <div class="box">
@@ -174,24 +397,24 @@ THE WORLD OF ANOTHER DIMENSION
 </div>
 
 <div class="menu">
-<button class="start" onclick="openCreate()">
+
+<button class="bigButton" onclick="openCreate()">
 ⚔ GAME START ⚔
 </button>
 
-<button onclick="showWorld()">
-WORLD
-</button>
-
 <button onclick="showSaved()">
-SAVED CHARACTER
+💾 SAVED CHARACTER
 </button>
+
 </div>
 
 </div>
 </div>
 
 
-<!-- キャラクター作成 -->
+<!-- =========================
+     キャラクター作成
+========================= -->
 
 <div id="createScreen" class="screen hidden">
 <div class="box">
@@ -238,29 +461,39 @@ SAVED CHARACTER
 </div>
 
 
-<!-- 完成画面 -->
+<!-- =========================
+     キャラクター完成
+========================= -->
 
 <div id="completeScreen" class="screen hidden">
-<div class="box complete">
+<div class="box">
 
 <h2>✨ キャラクター完成！ ✨</h2>
 
 <div id="characterResult" class="character-card"></div>
 
+<div class="actions">
 <button onclick="enterWorld()">
 🌍 冒険を始める
 </button>
 
+<button onclick="backTitle()">
+タイトルへ
+</button>
+</div>
+
 </div>
 </div>
 
 
-<!-- セーブキャラ -->
+<!-- =========================
+     保存キャラ
+========================= -->
 
 <div id="savedScreen" class="screen hidden">
 <div class="box">
 
-<h2>保存されたキャラクター</h2>
+<h2>💾 保存されたキャラクター</h2>
 
 <div id="savedResult" class="character-card"></div>
 
@@ -270,163 +503,276 @@ SAVED CHARACTER
 </div>
 
 
-<!-- WORLD -->
+<!-- =========================
+     ゲーム本編
+========================= -->
 
-<div id="worldScreen" class="screen hidden">
-<div class="box">
+<div id="gameScreen" class="screen hidden">
 
-<h2>🌍 異世界</h2>
+<div class="game">
 
-<div class="info">
-現在開発中。<br><br>
-王都・巨大森林・山岳地帯・砂漠・海・魔族領・天空世界・地下世界……。<br>
-この世界はこれからどんどん広がっていく。
+<div class="topbar">
+
+<div class="playerInfo">
+
+<div>
+<div class="playerName" id="playerName"></div>
+<div class="level" id="playerLevel"></div>
 </div>
 
-<button onclick="backTitle()">戻る</button>
+<div>
+<div>❤️ <span id="hpText"></span></div>
+<div class="hpBar">
+<div id="hpFill" class="hpFill"></div>
+</div>
+</div>
+
+<div>
+💰 <span class="gold" id="goldText"></span>G
+</div>
 
 </div>
+
+<button onclick="openInventory()">🎒 持ち物</button>
+
+</div>
+
+
+<div class="mainWorld">
+
+<div class="location" id="locationTitle">
+🏰 始まりの街
+</div>
+
+<div class="locationDescription" id="locationDescription">
+異世界へ転移した冒険者たちが最初に訪れる街。
+</div>
+
+
+<!-- 街 -->
+
+<div id="cityArea">
+
+<div class="cityScene">
+
+<div class="castle">🏰</div>
+
+<h2>始まりの街</h2>
+
+<p>
+多くの冒険者が集まる、世界の中心となる最初の街。
+</p>
+
+<p>
+街の外にはまだ見ぬ巨大な世界が広がっている。
+</p>
+
+</div>
+
+<div class="cityGrid">
+
+<button class="placeButton" onclick="openShop('weapon')">
+<span class="placeIcon">⚔️</span>
+武器屋
+</button>
+
+<button class="placeButton" onclick="openShop('armor')">
+<span class="placeIcon">🛡️</span>
+防具屋
+</button>
+
+<button class="placeButton" onclick="openShop('item')">
+<span class="placeIcon">🧪</span>
+道具屋
+</button>
+
+<button class="placeButton" onclick="openGuild()">
+<span class="placeIcon">🏛️</span>
+冒険者ギルド
+</button>
+
+<button class="placeButton" onclick="openQuest()">
+<span class="placeIcon">📜</span>
+クエスト掲示板
+</button>
+
+<button class="placeButton" onclick="goField()">
+<span class="placeIcon">🌲</span>
+街の外へ
+</button>
+
+</div>
+
+</div>
+
+
+<!-- フィールド -->
+
+<div id="fieldArea" class="hidden">
+
+<div class="fieldScene">
+
+<div class="fieldTitle">
+🌲 始まりの草原
+</div>
+
+<div class="playerToken">
+🧙
+</div>
+
+<div class="monster m1"
+onclick="encounter('スライム')">
+🟢
+</div>
+
+<div class="monster m2"
+onclick="encounter('ゴブリン')">
+👺
+</div>
+
+<div class="monster m3"
+onclick="encounter('ウルフ')">
+🐺
+</div>
+
+</div>
+
+<div class="fieldButtons">
+
+<button onclick="goCity()">
+🏰 街へ戻る
+</button>
+
+</div>
+
+</div>
+
+
+<div class="log" id="gameLog">
+冒険を始めよう！
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =========================
+     モーダル
+========================= -->
+
+<div id="modal" class="modal hidden">
+
+<div class="modalBox">
+
+<h2 id="modalTitle"></h2>
+
+<div id="modalContent"></div>
+
+<div class="actions">
+<button onclick="closeModal()">閉じる</button>
+</div>
+
+</div>
+
 </div>
 
 
 <script>
 
-/* =========================
-   種族20種類
-========================= */
+/* ===================================
+   種族
+=================================== */
 
-const races = [
-{
- name:"人間",
- desc:"バランス型。どの職業にも適性がある。",
- bonus:{hp:0,str:0,def:0,int:0,mnd:0,agi:0,luk:5}
-},
-{
- name:"エルフ",
- desc:"魔法に優れる種族。INTとMNDが高い。",
- bonus:{hp:-10,str:-5,def:0,int:15,mnd:15,agi:5,luk:5}
-},
-{
- name:"ドワーフ",
- desc:"頑丈な種族。DEFが高い。",
- bonus:{hp:20,str:10,def:20,int:-5,mnd:0,agi:-10,luk:0}
-},
-{
- name:"獣人",
- desc:"身体能力に優れる。AGIが高い。",
- bonus:{hp:5,str:10,def:0,int:-5,mnd:0,agi:20,luk:5}
-},
-{
- name:"小人",
- desc:"小柄で素早い。回避能力に優れる。",
- bonus:{hp:-10,str:-5,def:0,int:5,mnd:5,agi:25,luk:10}
-},
-{
- name:"妖精",
- desc:"魔力に恵まれた小さな種族。",
- bonus:{hp:-15,str:-10,def:-5,int:20,mnd:20,agi:10,luk:10}
-},
-{
- name:"鳥人",
- desc:"空中での移動を得意とする。",
- bonus:{hp:0,str:5,def:-5,int:0,mnd:0,agi:20,luk:5}
-},
-{
- name:"魚人",
- desc:"水中で圧倒的な能力を発揮する。",
- bonus:{hp:10,str:5,def:5,int:5,mnd:5,agi:5,luk:0}
-},
-{
- name:"リザードマン",
- desc:"強靭な肉体を持つ爬虫類系種族。",
- bonus:{hp:15,str:10,def:15,int:-5,mnd:0,agi:0,luk:0}
-},
-{
- name:"ゴブリン",
- desc:"成長が早い。序盤は弱くても将来性が高い。",
- bonus:{hp:0,str:0,def:0,int:0,mnd:0,agi:10,luk:10}
-},
-{
- name:"オーク",
- desc:"非常に高いHPを持つ。",
- bonus:{hp:35,str:15,def:10,int:-10,mnd:-5,agi:-15,luk:0}
-},
-{
- name:"魔族",
- desc:"闇属性との相性が良い。",
- bonus:{hp:10,str:5,def:5,int:15,mnd:5,agi:5,luk:5}
-},
-{
- name:"天使",
- desc:"光属性と回復魔法に適性がある。",
- bonus:{hp:0,str:0,def:5,int:10,mnd:25,agi:5,luk:10}
-},
-{
- name:"竜人",
- desc:"全体的に高い能力を持つ希少種族。",
- bonus:{hp:20,str:15,def:15,int:10,mnd:5,agi:5,luk:5}
-},
-{
- name:"スライム",
- desc:"状態異常への耐性に優れる。",
- bonus:{hp:10,str:-5,def:5,int:10,mnd:10,agi:10,luk:5}
-},
-{
- name:"アンデッド",
- desc:"毒などの状態異常に強い。",
- bonus:{hp:15,str:5,def:5,int:10,mnd:-5,agi:-5,luk:5}
-},
-{
- name:"精霊",
- desc:"純粋な魔力を持つ存在。",
- bonus:{hp:-10,str:-10,def:-5,int:25,mnd:20,agi:10,luk:10}
-},
-{
- name:"人魚",
- desc:"水属性の魔法と水中活動を得意とする。",
- bonus:{hp:5,str:-5,def:0,int:15,mnd:15,agi:10,luk:5}
-},
-{
- name:"巨人族",
- desc:"圧倒的なHPと力を持つが、動きは遅い。",
- bonus:{hp:50,str:25,def:20,int:-15,mnd:-5,agi:-25,luk:0}
-},
-{
- name:"？？？",
- desc:"条件を満たすことで解放される謎の種族。",
- bonus:{hp:10,str:10,def:10,int:10,mnd:10,agi:10,luk:10}
-}
+const races=[
+{name:"人間",desc:"バランス型。どの職業にも適性がある。",
+bonus:{hp:0,str:0,def:0,int:0,mnd:0,agi:0,luk:5}},
+
+{name:"エルフ",desc:"魔法に優れる種族。INTとMNDが高い。",
+bonus:{hp:-10,str:-5,def:0,int:15,mnd:15,agi:5,luk:5}},
+
+{name:"ドワーフ",desc:"頑丈な種族。DEFが高い。",
+bonus:{hp:20,str:10,def:20,int:-5,mnd:0,agi:-10,luk:0}},
+
+{name:"獣人",desc:"身体能力に優れる。AGIが高い。",
+bonus:{hp:5,str:10,def:0,int:-5,mnd:0,agi:20,luk:5}},
+
+{name:"小人",desc:"小柄で素早い。回避能力に優れる。",
+bonus:{hp:-10,str:-5,def:0,int:5,mnd:5,agi:25,luk:10}},
+
+{name:"妖精",desc:"魔力に恵まれた小さな種族。",
+bonus:{hp:-15,str:-10,def:-5,int:20,mnd:20,agi:10,luk:10}},
+
+{name:"鳥人",desc:"空中での移動を得意とする。",
+bonus:{hp:0,str:5,def:-5,int:0,mnd:0,agi:20,luk:5}},
+
+{name:"魚人",desc:"水中で圧倒的な能力を発揮する。",
+bonus:{hp:10,str:5,def:5,int:5,mnd:5,agi:5,luk:0}},
+
+{name:"リザードマン",desc:"強靭な肉体を持つ爬虫類系種族。",
+bonus:{hp:15,str:10,def:15,int:-5,mnd:0,agi:0,luk:0}},
+
+{name:"ゴブリン",desc:"成長が早い。将来性のある種族。",
+bonus:{hp:0,str:0,def:0,int:0,mnd:0,agi:10,luk:10}},
+
+{name:"オーク",desc:"非常に高いHPを持つ。",
+bonus:{hp:35,str:15,def:10,int:-10,mnd:-5,agi:-15,luk:0}},
+
+{name:"魔族",desc:"闇属性との相性が良い。",
+bonus:{hp:10,str:5,def:5,int:15,mnd:5,agi:5,luk:5}},
+
+{name:"天使",desc:"光属性と回復魔法に適性がある。",
+bonus:{hp:0,str:0,def:5,int:10,mnd:25,agi:5,luk:10}},
+
+{name:"竜人",desc:"全体的に高い能力を持つ希少種族。",
+bonus:{hp:20,str:15,def:15,int:10,mnd:5,agi:5,luk:5}},
+
+{name:"スライム",desc:"状態異常への耐性に優れる。",
+bonus:{hp:10,str:-5,def:5,int:10,mnd:10,agi:10,luk:5}},
+
+{name:"アンデッド",desc:"毒などの状態異常に強い。",
+bonus:{hp:15,str:5,def:5,int:10,mnd:-5,agi:-5,luk:5}},
+
+{name:"精霊",desc:"純粋な魔力を持つ存在。",
+bonus:{hp:-10,str:-10,def:-5,int:25,mnd:20,agi:10,luk:10}},
+
+{name:"人魚",desc:"水属性の魔法と水中活動を得意とする。",
+bonus:{hp:5,str:-5,def:0,int:15,mnd:15,agi:10,luk:5}},
+
+{name:"巨人族",desc:"圧倒的なHPと力を持つが、動きは遅い。",
+bonus:{hp:50,str:25,def:20,int:-15,mnd:-5,agi:-25,luk:0}},
+
+{name:"？？？",desc:"条件を満たすことで解放される謎の種族。",
+bonus:{hp:10,str:10,def:10,int:10,mnd:10,agi:10,luk:10}}
 ];
 
 
-/* =========================
-   初期職業100種類
-========================= */
+/* ===================================
+   職業100種類
+=================================== */
 
-const jobs = [
+const jobs=[
 
-/* 騎士25 */
 "見習い騎士","村の騎士","新米守衛","盾持ち","槍持ち",
 "王国兵","門番","騎士見習い","馬番騎士","鎧兵",
 "旅人騎士","傭兵","街道警備兵","鉄兜兵","森林警備兵",
 "城門兵","神殿警備兵","王都兵","小隊兵","古参兵",
 "重装兵","騎馬兵","守護兵","王国騎士","新人騎士",
 
-/* 魔法使い25 */
 "魔法見習い","杖持ち","火種使い","水滴使い","そよ風使い",
 "小石魔術師","明かり魔術師","薬草魔術師","初級魔術師","村の魔法使い",
 "魔法研究生","魔法学校生","魔法助手","占い師","星見習い",
 "精霊見習い","回復見習い","結界見習い","召喚見習い","呪文書係",
 "魔道具係","魔法薬係","古書魔術師","初級魔導師","新人魔法使い",
 
-/* 剣士25 */
 "木刀使い","剣士見習い","村の剣士","新米剣士","素振り剣士",
 "片手剣士","木剣兵","旅の剣士","訓練兵","剣術生徒",
 "見習い兵士","二刀流見習い","刀見習い","大剣見習い","剣技研究生",
 "道場生","道場見習い","街道剣士","用心棒","傭兵剣士",
 "王都剣士","古参剣士","剣術兵","剣闘士見習い","新人剣士",
 
-/* 非戦闘職25 */
 "農家","採集家","木こり","鉱夫","釣り師",
 "料理人","パン職人","商人","行商人","鍛冶見習い",
 "裁縫師","靴職人","大工","建築助手","薬草師",
@@ -435,68 +781,54 @@ const jobs = [
 ];
 
 
-/* 職業タイプ */
-
 function getJobType(job){
 
-    const knight = jobs.slice(0,25);
-    const mage = jobs.slice(25,50);
-    const sword = jobs.slice(50,75);
+    if(jobs.slice(0,25).includes(job))return"騎士";
+    if(jobs.slice(25,50).includes(job))return"魔法使い";
+    if(jobs.slice(50,75).includes(job))return"剣士";
 
-    if(knight.includes(job)) return "騎士";
-    if(mage.includes(job)) return "魔法使い";
-    if(sword.includes(job)) return "剣士";
-
-    return "非戦闘職";
+    return"非戦闘職";
 }
 
-
-/* 職業補正 */
 
 function getJobBonus(job){
 
     const type=getJobType(job);
 
     if(type==="騎士")
-        return {hp:30,str:5,def:15,int:-5,mnd:0,agi:-5,luk:0};
+        return{hp:30,str:5,def:15,int:-5,mnd:0,agi:-5,luk:0};
 
     if(type==="魔法使い")
-        return {hp:-10,str:-5,def:-5,int:20,mnd:15,agi:0,luk:5};
+        return{hp:-10,str:-5,def:-5,int:20,mnd:15,agi:0,luk:5};
 
     if(type==="剣士")
-        return {hp:5,str:20,def:5,int:-5,mnd:0,agi:15,luk:5};
+        return{hp:5,str:20,def:5,int:-5,mnd:0,agi:15,luk:5};
 
-    return {hp:0,str:0,def:0,int:0,mnd:0,agi:5,luk:15};
+    return{hp:0,str:0,def:0,int:0,mnd:0,agi:5,luk:15};
 }
 
 
-/* =========================
-   初期化
-========================= */
+/* ===================================
+   キャラクター作成
+=================================== */
 
 const raceSelect=document.getElementById("race");
 const jobSelect=document.getElementById("job");
 
 races.forEach((race,i)=>{
-    const option=document.createElement("option");
-    option.value=i;
-    option.textContent=race.name;
-    raceSelect.appendChild(option);
+    const o=document.createElement("option");
+    o.value=i;
+    o.textContent=race.name;
+    raceSelect.appendChild(o);
 });
 
 jobs.forEach((job,i)=>{
-    const option=document.createElement("option");
-    option.value=i;
-    option.textContent=`${job}（${getJobType(job)}）`;
-    jobSelect.appendChild(option);
+    const o=document.createElement("option");
+    o.value=i;
+    o.textContent=`${job}（${getJobType(job)}）`;
+    jobSelect.appendChild(o);
 });
 
-updateCharacter();
-
-
-/* =========================
-   ステータス更新
-========================= */
 
 function updateCharacter(){
 
@@ -516,17 +848,13 @@ function updateCharacter(){
         luk:20
     };
 
-    for(const key in base){
-        base[key]+=rb[key]+jb[key];
-    }
+    Object.keys(base).forEach(k=>{
+        base[k]+=rb[k]+jb[k];
+    });
 
-    document.getElementById("hp").textContent=base.hp;
-    document.getElementById("str").textContent=base.str;
-    document.getElementById("def").textContent=base.def;
-    document.getElementById("int").textContent=base.int;
-    document.getElementById("mnd").textContent=base.mnd;
-    document.getElementById("agi").textContent=base.agi;
-    document.getElementById("luk").textContent=base.luk;
+    Object.keys(base).forEach(k=>{
+        document.getElementById(k).textContent=base[k];
+    });
 
     document.getElementById("raceInfo").innerHTML=
         `<b>${race.name}</b><br>${race.desc}`;
@@ -542,38 +870,31 @@ function getJobDescription(job){
     const type=getJobType(job);
 
     if(type==="騎士")
-        return "HP・防御力に優れる。仲間を守る戦い方が得意。";
+        return"HP・防御力に優れ、仲間を守る戦いが得意。";
 
     if(type==="魔法使い")
-        return "魔法攻撃・回復・補助に優れる。";
+        return"魔法攻撃・回復・補助に優れる。";
 
     if(type==="剣士")
-        return "物理攻撃と素早さを活かして戦う。";
+        return"物理攻撃と素早さを活かして戦う。";
 
-    return "戦闘以外の活動で力を発揮する。";
-
+    return"戦闘以外の活動で力を発揮する。";
 }
 
 
-/* =========================
+updateCharacter();
+
+
+/* ===================================
    画面切り替え
-========================= */
+=================================== */
 
 function hideScreens(){
 
     document.querySelectorAll(".screen")
         .forEach(s=>s.classList.add("hidden"));
-
 }
 
-function openCreate(){
-
-    hideScreens();
-
-    document.getElementById("createScreen")
-        .classList.remove("hidden");
-
-}
 
 function backTitle(){
 
@@ -581,40 +902,50 @@ function backTitle(){
 
     document.getElementById("titleScreen")
         .classList.remove("hidden");
-
 }
 
 
-/* =========================
+function openCreate(){
+
+    hideScreens();
+
+    document.getElementById("createScreen")
+        .classList.remove("hidden");
+}
+
+
+/* ===================================
    キャラクター完成
-========================= */
+=================================== */
 
 function createCharacter(){
 
     const name=document.getElementById("name").value.trim();
 
     if(!name){
-
         alert("キャラクター名を入力してください。");
-
         return;
     }
 
-    const race=races[Number(raceSelect.value)];
-    const job=jobs[Number(jobSelect.value)];
-
     const character={
         name:name,
-        race:race.name,
-        job:job,
+        race:races[Number(raceSelect.value)].name,
+        job:jobs[Number(jobSelect.value)],
         level:1,
+
         hp:Number(document.getElementById("hp").textContent),
+        maxHp:Number(document.getElementById("hp").textContent),
+
         str:Number(document.getElementById("str").textContent),
         def:Number(document.getElementById("def").textContent),
         int:Number(document.getElementById("int").textContent),
         mnd:Number(document.getElementById("mnd").textContent),
         agi:Number(document.getElementById("agi").textContent),
-        luk:Number(document.getElementById("luk").textContent)
+        luk:Number(document.getElementById("luk").textContent),
+
+        gold:100,
+        skillPoints:0,
+        inventory:["初心者ポーション"]
     };
 
     localStorage.setItem(
@@ -622,28 +953,7 @@ function createCharacter(){
         JSON.stringify(character)
     );
 
-    document.getElementById("characterResult").innerHTML=`
-
-        <h3>${character.name}</h3>
-
-        <p>
-        種族：${character.race}<br>
-        職業：${character.job}<br>
-        Lv.${character.level}
-        </p>
-
-        <div class="stats">
-
-        <div class="stat">HP <b>${character.hp}</b></div>
-        <div class="stat">STR <b>${character.str}</b></div>
-        <div class="stat">DEF <b>${character.def}</b></div>
-        <div class="stat">INT <b>${character.int}</b></div>
-        <div class="stat">MND <b>${character.mnd}</b></div>
-        <div class="stat">AGI <b>${character.agi}</b></div>
-        <div class="stat">LUK <b>${character.luk}</b></div>
-
-        </div>
-    `;
+    showCharacterResult(character);
 
     hideScreens();
 
@@ -652,34 +962,64 @@ function createCharacter(){
 }
 
 
-/* =========================
-   セーブキャラ
-========================= */
+function showCharacterResult(c){
+
+    document.getElementById("characterResult").innerHTML=`
+
+        <h3 style="text-align:center">${escapeHTML(c.name)}</h3>
+
+        <p style="text-align:center">
+        種族：${c.race}<br>
+        職業：${c.job}<br>
+        Lv.${c.level}
+        </p>
+
+        <div class="stats">
+
+        <div class="stat">HP <b>${c.hp}</b></div>
+        <div class="stat">STR <b>${c.str}</b></div>
+        <div class="stat">DEF <b>${c.def}</b></div>
+        <div class="stat">INT <b>${c.int}</b></div>
+        <div class="stat">MND <b>${c.mnd}</b></div>
+        <div class="stat">AGI <b>${c.agi}</b></div>
+        <div class="stat">LUK <b>${c.luk}</b></div>
+
+        </div>
+    `;
+}
+
+
+/* ===================================
+   保存キャラ
+=================================== */
 
 function showSaved(){
 
     hideScreens();
 
-    const data=localStorage.getItem("isekaiCharacter");
-
     const result=document.getElementById("savedResult");
+
+    const data=localStorage.getItem("isekaiCharacter");
 
     if(!data){
 
-        result.innerHTML=
-            "<p>保存されたキャラクターはありません。</p>";
+        result.innerHTML="<p>保存されたキャラクターはありません。</p>";
 
     }else{
 
         const c=JSON.parse(data);
 
         result.innerHTML=`
-            <h3>${c.name}</h3>
-            <p>
-            種族：${c.race}<br>
-            職業：${c.job}<br>
-            Lv.${c.level}
-            </p>
+
+        <h3>${escapeHTML(c.name)}</h3>
+
+        <p>
+        種族：${c.race}<br>
+        職業：${c.job}<br>
+        Lv.${c.level}<br>
+        所持金：${c.gold}G
+        </p>
+
         `;
     }
 
@@ -688,27 +1028,469 @@ function showSaved(){
 }
 
 
-/* =========================
-   WORLD
-========================= */
+/* ===================================
+   ゲーム開始
+=================================== */
 
-function showWorld(){
-
-    hideScreens();
-
-    document.getElementById("worldScreen")
-        .classList.remove("hidden");
-
-}
+let player=null;
 
 function enterWorld(){
 
-    alert(
-        "キャラクター登録完了！\n\n"+
-        "次のアップデートで「始まりの街」を実装します。"
+    loadPlayer();
+
+    hideScreens();
+
+    document.getElementById("gameScreen")
+        .classList.remove("hidden");
+
+    goCity();
+
+    writeLog("🏰 始まりの街へ到着した！");
+}
+
+
+function loadPlayer(){
+
+    const data=localStorage.getItem("isekaiCharacter");
+
+    if(!data){
+        alert("キャラクターがありません。");
+        backTitle();
+        return;
+    }
+
+    player=JSON.parse(data);
+
+    if(player.maxHp===undefined)
+        player.maxHp=player.hp;
+
+    if(player.gold===undefined)
+        player.gold=100;
+
+    if(!player.inventory)
+        player.inventory=["初心者ポーション"];
+
+    updatePlayerUI();
+}
+
+
+function savePlayer(){
+
+    localStorage.setItem(
+        "isekaiCharacter",
+        JSON.stringify(player)
     );
 
-    backTitle();
+    updatePlayerUI();
+}
+
+
+function updatePlayerUI(){
+
+    if(!player)return;
+
+    document.getElementById("playerName").textContent=
+        player.name;
+
+    document.getElementById("playerLevel").textContent=
+        `Lv.${player.level}　${player.race} / ${player.job}`;
+
+    document.getElementById("hpText").textContent=
+        `${player.hp} / ${player.maxHp}`;
+
+    document.getElementById("goldText").textContent=
+        player.gold;
+
+    const percent=
+        Math.max(0,Math.min(100,
+            player.hp/player.maxHp*100
+        ));
+
+    document.getElementById("hpFill").style.width=
+        percent+"%";
+}
+
+
+/* ===================================
+   街
+=================================== */
+
+function goCity(){
+
+    document.getElementById("cityArea")
+        .classList.remove("hidden");
+
+    document.getElementById("fieldArea")
+        .classList.add("hidden");
+
+    document.getElementById("locationTitle")
+        .textContent="🏰 始まりの街";
+
+    document.getElementById("locationDescription")
+        .textContent=
+        "異世界へ転移した冒険者たちが最初に訪れる街。";
+}
+
+
+function goField(){
+
+    document.getElementById("cityArea")
+        .classList.add("hidden");
+
+    document.getElementById("fieldArea")
+        .classList.remove("hidden");
+
+    document.getElementById("locationTitle")
+        .textContent="🌲 始まりの草原";
+
+    document.getElementById("locationDescription")
+        .textContent=
+        "街の外に広がる初心者向けフィールド。";
+
+    writeLog("🌲 草原へ出た。モンスターがいる！");
+}
+
+
+/* ===================================
+   店
+=================================== */
+
+function openShop(type){
+
+    let title="";
+    let items=[];
+
+    if(type==="weapon"){
+
+        title="⚔️ 武器屋";
+
+        items=[
+            ["木の剣",50,"STR +5"],
+            ["鉄の剣",150,"STR +12"],
+            ["初心者の杖",80,"INT +8"]
+        ];
+
+    }else if(type==="armor"){
+
+        title="🛡️ 防具屋";
+
+        items=[
+            ["布の服",40,"DEF +3"],
+            ["革の鎧",120,"DEF +8"],
+            ["鉄の鎧",200,"DEF +15"]
+        ];
+
+    }else{
+
+        title="🧪 道具屋";
+
+        items=[
+            ["初心者ポーション",30,"HPを30回復"],
+            ["中級ポーション",100,"HPを80回復"],
+            ["帰還の羽",50,"街へ帰還できる"]
+        ];
+    }
+
+    let html='<div class="itemList">';
+
+    items.forEach(item=>{
+
+        html+=`
+
+        <div class="item">
+
+        <div>
+        <b>${item[0]}</b><br>
+        <small>${item[2]}</small>
+        </div>
+
+        <button onclick="buyItem('${item[0]}',${item[1]})">
+        ${item[1]}G
+        </button>
+
+        </div>
+
+        `;
+
+    });
+
+    html+="</div>";
+
+    showModal(title,html);
+}
+
+
+function buyItem(name,price){
+
+    if(player.gold<price){
+
+        alert("お金が足りません！");
+        return;
+    }
+
+    player.gold-=price;
+
+    player.inventory.push(name);
+
+    savePlayer();
+
+    writeLog(`🛒 ${name}を購入した！`);
+
+    closeModal();
+}
+
+
+/* ===================================
+   ギルド
+=================================== */
+
+function openGuild(){
+
+    showModal(
+        "🏛️ 冒険者ギルド",
+        `
+        <p>
+        「ようこそ、冒険者よ。」
+        </p>
+
+        <p>
+        ここではクエストを受けたり、
+        他の冒険者とパーティーを組んだりできる。
+        </p>
+
+        <p>
+        現在はギルド機能を開発中！
+        </p>
+        `
+    );
+}
+
+
+/* ===================================
+   クエスト
+=================================== */
+
+function openQuest(){
+
+    showModal(
+        "📜 クエスト掲示板",
+        `
+        <div class="itemList">
+
+        <div class="item">
+        <div>
+        <b>スライム討伐</b><br>
+        スライムを3体倒せ！
+        </div>
+        <span>報酬 100G</span>
+        </div>
+
+        <div class="item">
+        <div>
+        <b>ゴブリン調査</b><br>
+        草原のゴブリンを調査せよ。
+        </div>
+        <span>報酬 150G</span>
+        </div>
+
+        <div class="item">
+        <div>
+        <b>薬草採集</b><br>
+        薬草を5個集めよう。
+        </div>
+        <span>報酬 80G</span>
+        </div>
+
+        </div>
+        `
+    );
+}
+
+
+/* ===================================
+   モンスター遭遇
+=================================== */
+
+function encounter(monster){
+
+    let reward=0;
+
+    if(monster==="スライム")reward=20;
+    if(monster==="ゴブリン")reward=35;
+    if(monster==="ウルフ")reward=50;
+
+    showModal(
+        "⚔️ モンスター遭遇！",
+        `
+        <div style="text-align:center">
+
+        <div style="font-size:70px">
+        ${getMonsterEmoji(monster)}
+        </div>
+
+        <h3>${monster}</h3>
+
+        <p>
+        ${monster}が現れた！
+        </p>
+
+        <button onclick="mockBattle('${monster}',${reward})">
+        ⚔️ 戦う
+        </button>
+
+        </div>
+        `
+    );
+}
+
+
+function getMonsterEmoji(monster){
+
+    if(monster==="スライム")return"🟢";
+    if(monster==="ゴブリン")return"👺";
+    return"🐺";
+}
+
+
+/* ===================================
+   簡易戦闘
+=================================== */
+
+function mockBattle(monster,reward){
+
+    closeModal();
+
+    const damage=
+        Math.max(1,
+        Math.floor(Math.random()*8)+1);
+
+    player.hp=
+        Math.max(1,player.hp-damage);
+
+    player.gold+=reward;
+
+    savePlayer();
+
+    writeLog(
+        `⚔️ ${monster}を倒した！ `+
+        `${reward}Gを獲得。 `+
+        `HP -${damage}`
+    );
+
+    setTimeout(()=>{
+
+        if(Math.random()<0.35){
+
+            levelUp();
+
+        }
+
+    },300);
+}
+
+
+function levelUp(){
+
+    player.level++;
+
+    player.maxHp+=10;
+    player.hp=player.maxHp;
+
+    player.str+=2;
+    player.def+=2;
+    player.int+=2;
+    player.mnd+=2;
+    player.agi+=2;
+
+    player.skillPoints=
+        (player.skillPoints||0)+2;
+
+    savePlayer();
+
+    writeLog(
+        `✨ LEVEL UP！ Lv.${player.level}になった！ `+
+        `スキルポイント +2`
+    );
+}
+
+
+/* ===================================
+   持ち物
+=================================== */
+
+function openInventory(){
+
+    let html="<div class='itemList'>";
+
+    if(player.inventory.length===0){
+
+        html+="<p>持ち物はありません。</p>";
+
+    }else{
+
+        player.inventory.forEach(item=>{
+            html+=`
+            <div class="item">
+            🎒 ${item}
+            </div>
+            `;
+        });
+
+    }
+
+    html+="</div>";
+
+    showModal("🎒 持ち物",html);
+}
+
+
+/* ===================================
+   モーダル
+=================================== */
+
+function showModal(title,content){
+
+    document.getElementById("modalTitle")
+        .textContent=title;
+
+    document.getElementById("modalContent")
+        .innerHTML=content;
+
+    document.getElementById("modal")
+        .classList.remove("hidden");
+}
+
+
+function closeModal(){
+
+    document.getElementById("modal")
+        .classList.add("hidden");
+}
+
+
+/* ===================================
+   ログ
+=================================== */
+
+function writeLog(text){
+
+    document.getElementById("gameLog")
+        .textContent=text;
+}
+
+
+/* ===================================
+   HTML安全化
+=================================== */
+
+function escapeHTML(text){
+
+    return text
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
 }
 
 </script>
